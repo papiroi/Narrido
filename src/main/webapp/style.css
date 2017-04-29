@@ -1,0 +1,509 @@
+
+body{
+    padding-top: 50px;
+}
+
+.narrido-main-title{
+    word-wrap: break-word;
+    font-size: 5em;
+}
+
+.narrido-modal{
+    display: none;
+    position: fixed;
+    z-index: 1001;
+    width: 100%;
+    height: 100%;
+    padding-top: 100px;
+    left: 0;
+    top: 0;
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.25);
+    overflow: auto;
+}
+
+.narrido-modal-content{
+    background-color: #fefefe;
+    position: relative;
+    margin: auto;
+    padding: 0;
+    width: 80%;
+    word-wrap: break-word;
+    
+    -webkit-animation-name: modal;
+    -webkit-animation-duration: 0.4s;
+    animation-name: modal;
+    animation-duration: 0.3s;
+}
+
+.close{
+    position: absolute;
+    right: 20px;
+    top: 10px;
+}
+
+#reg-submit-status{
+    padding-right: 10px;
+}
+
+@-webkit-keyframes modal{
+    from {
+        opacity: 0;
+    }
+    
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes modal{
+    from {
+        //top: -300px;
+        opacity: 0;
+    }
+    
+    to {
+        //top: 0;
+        opacity: 1;
+    }
+}
+
+.narrido-modal-header{
+    padding: 10px 16px;
+    background-color: #5cb85c;
+    color: white;
+}
+
+.narrido-modal-body{
+    padding: 10px 10px;
+}
+
+.narrido-modal-footer{
+    padding: 10px 16px;
+    background-color: #5cb85c;
+    color: white;
+}
+
+.narrido-inline > input{
+    display: inline;
+}
+
+a.button{
+    -webkit-appearance: button;
+    -moz-appearance: button;
+    appearance: button;
+    text-decoration: none;
+    color: initial;
+    padding: 5px 5px;
+}
+
+.jumbotron{
+    background-image: url("image/jumbotron_bg1.jpg");
+    background-size: cover;
+    text-shadow: 2px 2px #000000;
+    color: #FFFFFF;
+}
+
+.padded{
+    padding: 20px;
+}
+
+.sidebar{
+    display: none;
+}
+
+.nav-sidebar {
+    margin-right: -21px; /* 20px padding + 1px border */
+    margin-bottom: 20px;
+    margin-left: -20px;
+    padding: 0px;
+    list-style: none;
+}
+.nav-sidebar li{
+    text-indent: 20px;
+    line-height: 30px;
+}
+
+.nav-sidebar li a{
+    display: block;
+    text-decoration: none;
+    color: #777;
+}
+
+.nav-sidebar li a:hover,
+.nav-sidebar li a:focus{
+    font-weight: bold;
+    background: rgba(0, 0, 0, 0.15);
+    border-right: 6px solid forestgreen;
+}
+
+.nav-sidebar li a:active{
+    font-weight: bold;
+    background: #aaa;
+    border-right: 6px solid forestgreen;
+}
+
+.nav-sidebar li a.active{
+    font-weight: bold;
+    background: rgba(0, 0, 0, 0);
+    border-right: 6px solid forestgreen;
+}
+
+.narrido-link-symbol{
+    margin-right: 5%;
+}
+
+.profile{
+    background-image: url("image/jumbotron_bg1.jpg");
+    background-size: cover;
+    margin: -20px;
+    padding: 20px;
+    color: white;
+    text-shadow: 1px 1px #000000;
+}
+
+.profile > img{
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    object-fit: fill;
+}
+
+.narrido-user-pic-md{
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    object-fit: fill;
+}
+
+.narrido-user-pic-sm{
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    object-fit: fill;
+}
+
+#username{
+    padding-top: 10px;
+}
+
+.role,
+.narrido-code-type,
+.narrido-group-type,
+.narrido-user-type{
+    display: inline-block;
+    font-size: 0.70em;
+    text-transform: uppercase;
+    border-radius: 10px;
+    background: rgb(0, 144, 226);
+    padding: 3px 7px 3px 7px;
+    color: white;
+}
+
+.narrido-name-md > h5{
+    display: inline-block;
+    vertical-align: sub;
+    margin-left: 7px;
+    margin-right: 7px;
+}
+
+.narrido-name-sm > *{
+    display: inline-block;
+    vertical-align: top;
+    margin-left: 0.25em;
+    margin-right: 0.25em;
+}
+
+.narrido-name-sm > span{
+    font-size: 0.50em;
+    vertical-align: top;
+    margin-right: 20px;
+}
+
+.narrido-name-md > span{
+    margin-right: 20px;
+}
+
+.content{
+    padding: 20px;
+}
+
+h1.content-title{
+    padding-bottom: 20px;
+    padding-right: 10px;
+}
+
+.fileUpload{
+    float: right;
+    position: relative;
+    overflow: hidden;
+    margin: 10px;
+}
+
+/*.fileUpload input.upload{
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0;
+    filter: alpha(opacity=0);
+}*/
+
+.btn-home{
+    border: 2px solid;
+    border-color: #aaa;
+    background-color: rgba(0, 0, 0, 0);
+    transition: border-color 300ms;
+}
+
+.btn-home:hover, .btn-home:focus, .btn-home:active, .btn-home:active:focus, .btn-home:active:hover{
+    color: #fff;
+    border-color: #fff;
+    background-color: rgba(0, 0, 0, 0);
+}
+
+#title-banner{
+    border-right: 2px solid #fff;
+}
+
+.form-container{
+    position: relative;
+    overflow: hidden;
+    max-height: 220px;
+    padding: 20px;
+}
+
+.login-register{
+    
+    /*transform: translateY(-50%);*/
+    margin-top: -220px;
+    transition: margin-top .5s;
+}           
+
+.login-register.appear{
+    margin-top: 0;
+    transition: margin-top .5s;
+    /*transform: translateY(0);*/
+}
+
+.login-form{
+    padding-bottom: 40px;
+    width: 100%;
+}
+
+@media(min-width: 800px){
+    .sidebar{
+        position: fixed;
+        top: 51px;
+        bottom: 0;
+        left: 0;
+        z-index: 1000;
+        display: block;
+        padding: 20px;
+        overflow-x: hidden;
+        overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+        background-color: #f5f5f5;
+        border-right: 1px solid #eee;
+    }
+    
+}
+
+
+#narrido-inner-nav{
+    position: fixed;
+    top: 30px;
+    left: 200px;
+    width: 100%;
+    height: 10%;
+    margin-top: -20px;
+    margin-left:-20px;
+    display: inline-block;
+    background: rgba(0, 0, 0, 0.25);
+}
+
+/*groups*/
+.narrido-group-item{
+    border: 2px solid;
+    height: 50%;
+    padding: 15px;
+    margin-top: 10px;
+    border-radius: 10px;
+    border-color: rgba(0, 0, 0, 0.25);
+}
+
+.narrido-group-item:hover{
+    background-color: rgba(0, 0, 0, 0.25);
+    cursor: pointer;
+}
+
+.narrido-group-item .narrido-group-item-title > *{
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.narrido-group-item-details{
+    margin-left: 20px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.narrido-group-icon{
+    background-color: rgb(53, 160, 67);
+    height: 100px;
+    width: 100px;
+    border-radius: 50px;
+    text-align: center;
+    display: inline-block;
+    color: white;
+    vertical-align: middle;
+    line-height: 90px;
+}
+
+.narrido-group-icon > *{
+    font-size: 4em;
+    vertical-align: middle;
+    text-shadow: 2px 2px #000;
+    text-align: center;
+}
+
+/*group page*/
+.narrido-group-nav{
+    padding-left: 0;
+    display: block;
+    list-style: none;
+}
+
+.narrido-group-nav li a{
+    text-align: center;
+    display: inline-block;
+    padding: 0px 10px 7px 10px;
+    font-size: 100%;
+    text-decoration: none;
+    color: #333;
+    white-space: nowrap;
+    width: 9em;
+}
+
+.narrido-group-nav > li:hover{
+    
+}
+
+.narrido-group-nav li a:hover,
+.narrido-group-nav li a:active,
+.narrido-group-nav li a.active{
+    border-bottom: solid 7px;
+    border-color: forestgreen;
+}
+
+.narrido-group-page-title,
+.narrido-group-nav > li{
+    display: inline-block;
+}
+
+.narrido-header{
+    display: block;
+}
+
+.narrido-header > *{
+    display: inline-block;
+}
+
+.narrido-student{
+    background: rgb(255, 89, 0);
+}
+
+.narrido-faculty{
+    background: rgb(0, 214, 74);
+}
+
+.narrido-dept-head{
+    background: rgb(0, 130, 142);
+}
+
+.narrido-it-staff{
+    background: rgb(66, 134, 244);
+}
+
+.narrido-property-supply{
+
+    background: rgb(204, 0, 78);
+}
+
+.narrido-mis-officer{
+    background: rgb(114, 0, 105); 
+}
+
+.narrido-feed-item{
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+/*news feed*/
+.narrido-feed-content{
+    margin-top: 10px;
+}
+
+.narrido-feed-content > *{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.narrido-feed-text{
+    font-size: 2em;
+    font-family: "Georgia";
+}
+
+.narrido-feed-file{
+    background-color: rgba(0, 0, 0, 0.10);
+    padding: 10px;
+    border-radius: 0.70em;
+}
+
+.narrido-feed-comments{
+    margin-top: 10px;
+    margin-left: 2%;
+    margin-bottom: 4%;
+}
+
+.narrido-input-text{
+    border-radius: 5px;
+    width: 50%;
+}
+
+.narrido-input-text ~ *{
+    vertical-align: top;
+}
+
+.member-box {
+    margin-bottom: 20px;
+}
+
+.member-box > *{
+    margin-bottom: 10px;
+}
+
+.narrido-file {
+    padding: 15px;
+    border-color: #bbbbbb;
+    border-style: solid;
+    border-width: 1px;
+    box-shadow: 5px 5px 7px 0px rgba(0,0,0,0.25);
+    vertical-align: middle;
+    text-overflow: ellipsis;
+}
+
+.narrido-file:hover {
+    background-color: rgba(0, 0, 0, 0.25);
+    cursor: pointer;
+}
+
+.narrido-file > img{
+    width: 60px;
+    height: 60px;
+    object-fit: fill;
+}
