@@ -297,13 +297,15 @@ public class NarridoITResource {
     @Path("/support")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response newTicket(NarridoJob job) {
-        return Response.ok(job).build();
+        //TODO: add create ticket thing
+        return Response.ok().build();
     }
     
     @GET
     @Path("/support")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getTickets(@QueryParam("status") String status) {
+        //TODO: add get ticket thing
         return Response.ok(new ArrayList<NarridoJob>()).build();
     }
 }
