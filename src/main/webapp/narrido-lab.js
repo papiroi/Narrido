@@ -738,6 +738,7 @@ function addSupportIssueBody() {
         id: "support-lab-id",
         class: "form-control"
     }).on("change", function() {
+        $("#support-pcs").empty();
         getPcOptions(labCombo.val());
     }).appendTo(comboDiv);
     
@@ -789,7 +790,7 @@ function getPcOptions(labId) {
         dataType: "json",
         success: function (pcs) {
             pcs.forEach(function(pc) {
-                $("<option/>", {value: JSON.stringify(pc)}).text(pc.pcNumber).appendTo($("#support-pcs").empty());
+                $("<option/>", {value: JSON.stringify(pc)}).text(pc.pcNumber).appendTo($("#support-pcs"));
             });
         },
         error: function (xhr) {

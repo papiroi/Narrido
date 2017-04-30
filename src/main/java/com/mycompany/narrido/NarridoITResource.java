@@ -5,6 +5,8 @@
  */
 package com.mycompany.narrido;
 
+import com.mycompany.narrido.dao.UserDaoHb;
+import com.mycompany.narrido.dao.ice.UserDao;
 import com.mycompany.narrido.helper.NarridoAuth;
 import com.mycompany.narrido.helper.NarridoGeneric;
 import com.mycompany.narrido.helper.NarridoIO;
@@ -14,6 +16,7 @@ import com.mycompany.narrido.pojo.NarridoDailyMonitoring;
 import com.mycompany.narrido.pojo.NarridoDailyMonitoring_;
 import com.mycompany.narrido.pojo.NarridoFile;
 import com.mycompany.narrido.pojo.NarridoJob;
+import com.mycompany.narrido.pojo.NarridoJob_;
 import com.mycompany.narrido.pojo.NarridoLaboratory;
 import com.mycompany.narrido.pojo.NarridoLaboratory_;
 import com.mycompany.narrido.pojo.NarridoPc;
@@ -29,7 +32,6 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.NoResultException;
@@ -61,6 +63,8 @@ public class NarridoITResource {
     
     @Context
     ResourceContext rcontext;
+    
+    private UserDao dao = UserDaoHb.getInstance();
     
     @GET
     @Path("/monitoring/{labId}")
@@ -98,7 +102,7 @@ public class NarridoITResource {
     @POST
     @Path("/monitoring/{labId}")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response viewMonitoring(@PathParam("labId") Integer labId, final NarridoDailyMonitoring monitoring) {
+    public Response addMonitoring(@PathParam("labId") Integer labId, final NarridoDailyMonitoring monitoring) {
         NarridoUser user = null;
         NarridoLaboratory laboratory = null;
         try {
@@ -297,15 +301,74 @@ public class NarridoITResource {
     @Path("/support")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response newTicket(NarridoJob job) {
-        //TODO: add create ticket thing
-        return Response.ok().build();
+        NarridoUser user = null;
+        try {
+            String token = context.getHeaderString(HttpHeaders.AUTHORIZATION);
+            if (token != null) {
+                Jws<Claims> claims = NarridoAuth.authenticate(token.substring("Bearer".length()));
+                user = NarridoGeneric.getSingle(NarridoUser.class, NarridoUser_.username, claims.getBody().getSubject());
+            } else {
+                return Response.status(Response.Status.FORBIDDEN)
+                        .entity("Login required")
+                        .build();
+            }
+            
+            job.setReportedBy(user);
+            
+            NarridoGeneric.saveThing(job);
+            
+            NarridoPushResource npr = rcontext.getResource(NarridoPushResource.class);
+            npr.sendToEveryone(job);
+            return Response.ok("Report submitted!").build();
+        } catch (JwtException | HibernateException e) {
+            return Response.status(Response.Status.FORBIDDEN)
+                    .entity(NarridoGeneric.getStackTrace(e))
+                    .build();
+        } catch (NoResultException ne) {
+            return Response.status(Response.Status.NOT_FOUND)
+                    .entity("Laboratory not found")
+                    .build();
+        }
     }
     
     @GET
     @Path("/support")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getTickets(@QueryParam("status") String status) {
-        //TODO: add get ticket thing
-        return Response.ok(new ArrayList<NarridoJob>()).build();
+        NarridoUser user = null;
+        List<NarridoJob> jobs;
+        try {
+            String token = context.getHeaderString(HttpHeaders.AUTHORIZATION);
+            if (token != null) {
+                Jws<Claims> claims = NarridoAuth.authenticate(token.substring("Bearer".length()));
+                user = NarridoGeneric.getSingle(NarridoUser.class, NarridoUser_.username, claims.getBody().getSubject());
+            } else {
+                return Response.status(Response.Status.FORBIDDEN)
+                        .entity("Login required")
+                        .build();
+            }
+            
+            boolean isFaculty = NarridoType.FACULTY.equals(user.getType());
+            
+            if("all".equals(status)) {
+                jobs = !isFaculty ?
+                            NarridoGeneric.getList(NarridoJob.class) :
+                            dao.mySubmittedJobs(user, status);
+            } else {
+                jobs = !isFaculty ?
+                            NarridoGeneric.getList(NarridoJob.class, NarridoJob_.status, status) :
+                            dao.mySubmittedJobs(user, status);
+            }
+            
+            return Response.ok(jobs).build();
+        } catch (JwtException | HibernateException e) {
+            return Response.status(Response.Status.FORBIDDEN)
+                    .entity(NarridoGeneric.getStackTrace(e))
+                    .build();
+        } catch (NoResultException ne) {
+            return Response.status(Response.Status.NOT_FOUND)
+                    .entity("Laboratory not found")
+                    .build();
+        }
     }
 }

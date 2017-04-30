@@ -7,6 +7,7 @@ package com.mycompany.narrido.dao.ice;
 
 import com.mycompany.narrido.pojo.NarridoFile;
 import com.mycompany.narrido.pojo.NarridoGroup;
+import com.mycompany.narrido.pojo.NarridoJob;
 import com.mycompany.narrido.pojo.NarridoUser;
 import java.util.List;
 
@@ -21,4 +22,5 @@ public interface UserDao {
     public List<NarridoGroup> ownedGroups(NarridoUser user);
     public List<NarridoGroup> joinedGroups(NarridoUser user);
     public List<NarridoFile> myFiles(NarridoUser user);
+    public List<NarridoJob> mySubmittedJobs(NarridoUser user, String status);
 }

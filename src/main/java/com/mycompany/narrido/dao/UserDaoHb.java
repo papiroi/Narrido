@@ -11,6 +11,8 @@ import com.mycompany.narrido.helper.SFH;
 import com.mycompany.narrido.pojo.NarridoFile;
 import com.mycompany.narrido.pojo.NarridoFile_;
 import com.mycompany.narrido.pojo.NarridoGroup;
+import com.mycompany.narrido.pojo.NarridoJob;
+import com.mycompany.narrido.pojo.NarridoJob_;
 import com.mycompany.narrido.pojo.NarridoMembership;
 import com.mycompany.narrido.pojo.NarridoUser;
 import com.mycompany.narrido.pojo.NarridoUser_;
@@ -160,6 +162,32 @@ public final class UserDaoHb implements UserDao{
         }
         
         return files;
+    }
+
+    @Override
+    public List<NarridoJob> mySubmittedJobs(NarridoUser user, String status) {
+        List<NarridoJob> jobs = new ArrayList<>();
+        final Session sess = SFH.getSF().openSession();
+        
+        try {
+            CriteriaBuilder cb = sess.getCriteriaBuilder();
+            CriteriaQuery<NarridoJob> cq = cb.createQuery(NarridoJob.class);
+            Root<NarridoJob> root = cq.from(NarridoJob.class);
+            cq.where(cb.and(
+                cb.equal(root.get(NarridoJob_.reportedBy), user),
+                cb.equal(root.get(NarridoJob_.status), status)
+            ));
+                    
+            
+            TypedQuery<NarridoJob> tq = sess.createQuery(cq);
+            jobs = tq.getResultList();
+        } catch (HibernateException e) {
+            e.printStackTrace(System.err);
+        } finally {
+            sess.close();
+        }
+        
+        return jobs;
     }
     
 }
