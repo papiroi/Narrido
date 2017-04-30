@@ -497,6 +497,7 @@ h1.content-title{
     text-overflow: ellipsis;
 }
 
+.narrido-it-row:hover,
 .narrido-file:hover {
     background-color: rgba(0, 0, 0, 0.25);
     cursor: pointer;

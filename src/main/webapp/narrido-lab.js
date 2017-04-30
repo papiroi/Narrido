@@ -385,8 +385,8 @@ function tablifyPc(data) {
     $("<th/>").text("Property Nr.").appendTo(theadrow);
     $("<th/>").text("Unit Value").appendTo(theadrow);
     $("<th/>").text("Status").appendTo(theadrow);
-    $("<th/>").text("PAR Issued To").appendTo(theadrow);
-    $("<th/>").text("Assigned To").appendTo(theadrow);
+    $("<th/>").text("PAR Assigned To").appendTo(theadrow);
+    $("<th/>").text("Re-MR To").appendTo(theadrow);
     
     var tbody = $("<tbody/>", {id: "table-pc-lab-" + laboratoryId}).appendTo(table);
     data.forEach(function(data) {
@@ -672,9 +672,13 @@ function tablifySupport(tickets) {
     var tBody = $("<tbody/>").appendTo(table);
     
     tickets.forEach(function(ticket) {
-        var bodyRow = $("<tr/>").appendTo(tBody);
+        var bodyRow = $("<tr/>", {class: "narrido-it-row"})
+                .on("click", function() {
+                    showModal(updateIssueBody(ticket), "Update Issue");
+                })
+                .appendTo(tBody);
         
-        $("<td/>").html(ticket.report).appendTo(bodyRow);
+        $("<th/>", {scope: "row"}).html(ticket.report).appendTo(bodyRow);
         var dateReported = new Date(ticket.dateReported).toDateString();
         $("<td/>").html(dateReported).appendTo(bodyRow);
         $("<td/>").append(nameHeader(ticket.reportedBy, "sm")).appendTo(bodyRow);
@@ -797,5 +801,84 @@ function getPcOptions(labId) {
 }
 
 function updateIssueBody(ticket) {
-    //TODO: insert form here
+    var frag = document.createDocumentFragment();
+    
+    var container = $("<div/>", {class: "container"}).appendTo(frag);
+    $("<h3/>").text("Issue nr. " + ticket.jobId + ": " + ticket.report).appendTo(container);
+    var form = $("<form/>").on("submit", function(event) {
+        event.preventDefault();
+        
+        ticket.status = $("#support-status-update").val();
+        ticket.findings = $("#support-diagnostics-update").val();
+        
+        
+        $("#support-submit-update").prop("disabled", true).text("Submitting...");
+
+        $.ajax({
+            type: "PUT",
+            url: "/Narrido-1.0-SNAPSHOT/api/it/support",
+            data: JSON.stringify(ticket),
+            contentType: "application/json",
+            success: function() {
+                showModal($("<p/>").text("Issue updated!"), "Report a Problem");
+            },
+            error: function(xhr) {
+                showModal($("<p/>").text("Error updating issue: " + xhr.responseText), "Report a Problem");
+            }
+        });
+    }).appendTo(container);
+    
+    var row = $("<div/>", {class: "form-group row"}).appendTo(form);
+
+    var comboDiv = $("<div/>", {class: "col-xs-4"}).appendTo(row);
+    var statusCombo = $("<select/>", {
+        name: "status",
+        id: "support-status-update",
+        class: "form-control"
+    }).appendTo(comboDiv);
+    
+    ["pending", "resolved"].forEach(function(status) {
+        $("<option/>", {value: status})
+                .html(status).appendTo(statusCombo);
+    });
+    
+    var diagnosticsRow = $("<div/>", {class: "form-group row"})
+            .appendTo(form);
+    
+    var diagnosticsDiv = $("<div/>", {class: "col-xs-12"})
+            .appendTo(diagnosticsRow);
+    
+    $("<textarea/>", {
+        id: "support-diagnostics-update",
+        placeholder: "Diagnostics (eg. HDD bad sector, AVR busted fuse)",
+        class: "form-control",
+        required: true
+    }).appendTo(diagnosticsDiv);
+    
+    var applicationRow = $("<div/>", {class: "form-group row"})
+            .appendTo(form);
+    
+    var applicationDiv = $("<div/>", {class: "col-xs-12"})
+            .appendTo(applicationRow);
+    
+    $("<textarea/>", {
+        id: "support-application-update",
+        placeholder: "Application (eg. replaced HDD, replaced fuse, for further inspection)",
+        class: "form-control"
+    }).appendTo(applicationDiv);
+    
+    var buttonRow = $("<div/>", {class: "form-group row"})
+            .appendTo(form);
+    
+    var buttonDiv = $("<div/>", {class: "col-xs-12"})
+            .appendTo(buttonRow);
+    
+    $("<button/>", {
+        type: "submit",
+        id: "support-submit-update",
+        value: "Submit",
+        class: "btn btn-primary"
+    }).text("Submit").appendTo(buttonDiv);
+    
+    return frag;
 }
