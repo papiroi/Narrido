@@ -9,6 +9,7 @@ import com.mycompany.narrido.dao.UserDaoHb;
 import com.mycompany.narrido.dao.ice.UserDao;
 import com.mycompany.narrido.helper.NarridoAuth;
 import com.mycompany.narrido.helper.NarridoGeneric;
+import com.mycompany.narrido.helper.NarridoGeneric.NarridoOperation;
 import com.mycompany.narrido.helper.NarridoIO;
 import com.mycompany.narrido.helper.NarridoReport;
 import com.mycompany.narrido.helper.NarridoType;
@@ -32,12 +33,14 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.NoResultException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -331,9 +334,49 @@ public class NarridoITResource {
         }
     }
     
+    @PUT
+    @Path("/support")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response updateTicket(NarridoJob job) {
+        NarridoUser user = null;
+        try {
+            String token = context.getHeaderString(HttpHeaders.AUTHORIZATION);
+            if (token != null) {
+                Jws<Claims> claims = NarridoAuth.authenticate(token.substring("Bearer".length()));
+                user = NarridoGeneric.getSingle(NarridoUser.class, NarridoUser_.username, claims.getBody().getSubject());
+            } else {
+                return Response.status(Response.Status.FORBIDDEN)
+                        .entity("Login required")
+                        .build();
+            }
+            
+            job.setHandledBy(user);
+            
+            if("resolved".equals(job.getStatus())) {
+                job.setDateResolved(new Date());
+            } else {
+                job.setDateResolved(null);
+            }
+            
+            NarridoGeneric.doThing(NarridoOperation.UPDATE, job);
+            
+            NarridoPushResource npr = rcontext.getResource(NarridoPushResource.class);
+            npr.sendToEveryone(job);
+            return Response.ok("Report updated!").build();
+        } catch (JwtException | HibernateException e) {
+            return Response.status(Response.Status.FORBIDDEN)
+                    .entity(NarridoGeneric.getStackTrace(e))
+                    .build();
+        } catch (NoResultException ne) {
+            return Response.status(Response.Status.NOT_FOUND)
+                    .entity("Laboratory not found")
+                    .build();
+        }
+    }
+    
     @GET
     @Path("/support")
-    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
     public Response getTickets(@QueryParam("status") String status) {
         NarridoUser user = null;
         List<NarridoJob> jobs;
@@ -370,5 +413,79 @@ public class NarridoITResource {
                     .entity("Laboratory not found")
                     .build();
         }
+    }
+    
+    /**
+     * Fake JAX RS response to get installed software list on a machine.
+     * @return a string of installed programs
+     */
+    @GET
+    @Path("/pc/software")
+    public Response getInstalledSoftware(/*I could use a pc number...*/) {
+        return Response.ok("NetBeans IDE 8.1\nMicrosoft Office 2010\nMicrosoft Visual Studio 2012\nAdobe Photoshop CS6\nSteam\nDOTA 2\nHalf-Life\nChrome").build();
+    }
+    
+    /**
+     * Yet another Fake JAX RS response that gives fake running program list
+     * For the sake of demonstration and testing, of course
+     * @return a string of running programs
+     */
+    @GET
+    @Path("/pc/running")
+    public Response getRunningPrograms(/*I could use a pc number...*/) {
+        //of course steam is required
+        return Response.ok("DOTA 2 \nSteam \nResume ko 2 - Microsoft Word \nUntitled - Chrome").build();
+    }
+    
+    @GET
+    @Path("/pc/logs")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getLog(/*I could use a pc number...*/) {
+        final List<LogData> logs = new ArrayList<>();
+        
+        logs.add(new LogData("Machine start", new Date()));
+        logs.add(new LogData("Logged in (Princess Meliza Narrido)", new Date()));
+        logs.add(new LogData("Logged out", new Date()));
+        logs.add(new LogData("Machine shutdown", new Date()));
+        logs.add(new LogData("Machine startup", new Date()));
+        logs.add(new LogData("Logged in (Marie Jane Herbas)", new Date()));
+        logs.add(new LogData("Logged out", new Date()));
+        logs.add(new LogData("Logged in (Rocky Axtor)", new Date()));
+        logs.add(new LogData("Logged out", new Date()));
+        logs.add(new LogData("Machine shutdown", new Date()));
+        logs.add(new LogData("Machine startup", new Date()));
+        logs.add(new LogData("Logged in (Jay Dominguez)", new Date()));
+        
+        return Response.ok(logs).build();
+    }
+}
+
+
+class LogData {
+    private String log;
+    private Date date;
+
+    public LogData() {
+    }
+
+    public LogData(String log, Date date) {
+        this.log = log;
+        this.date = date;
+    }
+
+    public String getLog() {
+        return log;
+    }
+
+    public void setLog(String log) {
+        this.log = log;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 }

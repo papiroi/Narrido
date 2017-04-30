@@ -652,12 +652,12 @@ function tablifySupport(tickets) {
     var isTech = userObj.type === "it-staff";
     
     var headers = [
-        "In Charge",
-        "Issue Status",
-        "Reported By",
-        "PC/Equipment nr.",
         "Report/s",
         "Date Reported",
+        "Reported By",
+        "In Charge",
+        "Issue Status",
+        "PC/Equipment nr.",
         "Date Resolved",
         "Diagnostics",
         "Equipment Status",
@@ -674,24 +674,21 @@ function tablifySupport(tickets) {
     tickets.forEach(function(ticket) {
         var bodyRow = $("<tr/>").appendTo(tBody);
         
-        var handler = ticket.handledBy ? nameHeader(ticket.handledBy) : $("<p/>").text("N/A");
+        $("<td/>").html(ticket.report).appendTo(bodyRow);
+        var dateReported = new Date(ticket.dateReported).toDateString();
+        $("<td/>").html(dateReported).appendTo(bodyRow);
+        $("<td/>").append(nameHeader(ticket.reportedBy, "sm")).appendTo(bodyRow);
+        var handler = ticket.handledBy ? nameHeader(ticket.handledBy, "sm") : $("<p/>").text("N/A");
         $("<td/>").append(handler).appendTo(bodyRow);
         $("<td/>").html(ticket.status).appendTo(bodyRow);
-        $("<td/>").append(nameHeader(ticket.reportedBy)).appendTo(bodyRow);
         $("<td/>").html(ticket.pc.pcNumber).appendTo(bodyRow);
-        $("<td/>").html(ticket.report).appendTo(bodyRow);
-        
-        //temporals
-        var dateReported = new Date(ticket.dateReported).toDateString();
         var dateResolved = ticket.dateResolved ? new Date(ticket.dateResolved).toDateString() : "N/A";
-        $("<td/>").html(dateReported).appendTo(bodyRow);
         $("<td/>").html(dateResolved).appendTo(bodyRow);
-        
         $("<td/>").html(ticket.findings).appendTo(bodyRow);
         $("<td/>").html(ticket.pc.status).appendTo(bodyRow);
         $("<td/>").html(ticket.action).appendTo(bodyRow);
         
-        //TODO: add update button
+        //TODO: add update event upon click of row
     });
     
     return frag;
@@ -797,4 +794,8 @@ function getPcOptions(labId) {
             showModal($("<p/>").text("Error in getting pcs: " + xhr.responseText), "Error");
         }
     });
+}
+
+function updateIssueBody(ticket) {
+    //TODO: insert form here
 }
