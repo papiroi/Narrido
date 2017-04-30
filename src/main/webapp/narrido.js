@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-//TODO: SUPER!!! Create pojo for pc entities
+//TODO: Major to do: add view pc
 
 var loginButton = document.getElementById("login-button");
 var regButton = document.getElementById("reg-button");

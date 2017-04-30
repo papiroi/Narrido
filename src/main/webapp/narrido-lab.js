@@ -390,7 +390,12 @@ function tablifyPc(data) {
     
     var tbody = $("<tbody/>", {id: "table-pc-lab-" + laboratoryId}).appendTo(table);
     data.forEach(function(data) {
-        var bodyrow = $("<tr/>").appendTo(tbody);
+        var bodyrow = $("<tr/>", {class: "narrido-it-row"})
+                .on("click", function(event) {
+                    openPcPage(data, event);
+                })
+                .appendTo(tbody);
+        
         $("<th/>", {scope: "row"}).text(data.laboratory.labId).appendTo(bodyrow);
         $("<td/>").text(data.pcNumber).appendTo(bodyrow);
         $("<td/>").text(data.pcDescription).appendTo(bodyrow);
@@ -582,7 +587,7 @@ function showSupport() {
     var form = $("<form/>").appendTo(container);
     var row = $("<div/>", {class: "form-group row"}).appendTo(form);
 
-    var comboDiv = $("<div/>", {class: "col-xs-4"}).appendTo(row);
+    var comboDiv = $("<div/>", {class: "col-xs-2"}).appendTo(row);
     var statusCombo = $("<select/>", {
         name: "supportStatus",
         id: "support-status",
@@ -611,7 +616,27 @@ function showSupport() {
                 .html(stat.description).appendTo(statusCombo);
     });
     
-    var buttonDiv = $("<div/>", {class: "col-xs-3 offset-xs-5"}).appendTo(row);
+    var buttonDiv2 = $("<div/>", {class: "col-xs-3 offset-xs-4"}).appendTo(row);
+    var button2 = $("<button/>", {
+        type: "button",
+        class: "form-control btn btn-primary"
+    }).html("Generate Report")
+            .on("click", function() {
+                showModal($("<p/>").text("Generating Report..."), "Generate Report");
+                $.ajax({
+                    type: "GET",
+                    url: "replace me with report url ok", //TODO
+                    success: function (response) {
+                        showModal($("<p/>").text(response), "Generate Report");
+                    },
+                    error: function (xhr) {
+                        showModal($("<p/>").text(xhr.responseText), "Generate Report");
+                    }
+                });
+            })
+            .appendTo(buttonDiv2);
+    
+    var buttonDiv = $("<div/>", {class: "col-xs-3"}).appendTo(row);
     var button = $("<button/>", {
         type: "button",
         class: "form-control btn btn-primary"
@@ -662,7 +687,6 @@ function tablifySupport(tickets) {
         "Diagnostics",
         "Equipment Status",
         "Application"
-        //TODO: isTech ? "Action" : 
     ];
     
     headers.forEach(function(header) {
@@ -674,11 +698,13 @@ function tablifySupport(tickets) {
     tickets.forEach(function(ticket) {
         var bodyRow = $("<tr/>", {class: "narrido-it-row"})
                 .on("click", function() {
-                    showModal(updateIssueBody(ticket), "Update Issue");
+                    if(userObj.type === "it-staff") {
+                        showModal(updateIssueBody(ticket), "Update Issue");
+                    }
                 })
                 .appendTo(tBody);
         
-        $("<th/>", {scope: "row"}).html(ticket.report).appendTo(bodyRow);
+        $("<th/>", {scope: "row"}).html("#" + ticket.jobId + ": " +ticket.report).appendTo(bodyRow);
         var dateReported = new Date(ticket.dateReported).toDateString();
         $("<td/>").html(dateReported).appendTo(bodyRow);
         $("<td/>").append(nameHeader(ticket.reportedBy, "sm")).appendTo(bodyRow);
@@ -692,7 +718,6 @@ function tablifySupport(tickets) {
         $("<td/>").html(ticket.pc.status).appendTo(bodyRow);
         $("<td/>").html(ticket.action).appendTo(bodyRow);
         
-        //TODO: add update event upon click of row
     });
     
     return frag;
@@ -804,12 +829,13 @@ function updateIssueBody(ticket) {
     var frag = document.createDocumentFragment();
     
     var container = $("<div/>", {class: "container"}).appendTo(frag);
-    $("<h3/>").text("Issue nr. " + ticket.jobId + ": " + ticket.report).appendTo(container);
+    $("<h3/>").text("Issue # " + ticket.jobId + ": " + ticket.report).appendTo(container);
     var form = $("<form/>").on("submit", function(event) {
         event.preventDefault();
         
         ticket.status = $("#support-status-update").val();
         ticket.findings = $("#support-diagnostics-update").val();
+        ticket.action = $("#support-application-update").val();
         
         
         $("#support-submit-update").prop("disabled", true).text("Submitting...");
@@ -881,4 +907,105 @@ function updateIssueBody(ticket) {
     }).text("Submit").appendTo(buttonDiv);
     
     return frag;
+}
+
+function showPcPage() {
+    var pageContainer = $("#pc-page");
+    $("#narrido-content-title-pc-page").text("Something Seomthing PC Identifier goes here");
+    var pageContent = $("<div/>", {class: "narrido-pc-page-content"}).appendTo(pageContainer);
+}
+
+function openPcPage(pc, event) {
+    $("#narrido-content-title-pc-page").text(pc.pcNumber);
+    
+    showPcTabs(pc);
+    showPane(event, "pc-page", "narrido-tab-pane", "narrido-main-link");
+}
+
+function pcPageNav(pc) {
+    var pageNav = document.createElement("ul");
+    pageNav.classList.add("narrido-group-nav", "narrido-group-page-title");
+    
+    var linkz = [
+        {
+            text: "Description",
+            theLink: "pc-page-description-" + pc.pcId,
+            clazz: "narrido-pc-page-link"
+        },
+        {
+            text: "Installed Programs",
+            theLink: "pc-page-installed-"  + pc.pcId,
+            clazz: "narrido-pc-page-link"
+        },
+        {
+            text: "Running Programs",
+            theLink: "pc-page-running-" + pc.pcId,
+            clazz: "narrido-pc-page-link"
+        },
+        {
+            text: "Usage Log",
+            theLink: "pc-page-usage-log-" + pc.pcId,
+            clazz: "narrido-pc-page-link"
+        },
+        {
+            text: "Issues",
+            theLink: "pc-page-issues-" + pc.pcId,
+            clazz: "narrido-pc-page-link"
+        }
+    ];
+    
+    linkz.forEach(function(link) {
+        var listItem = document.createElement("li");
+        var linkElem = document.createElement("a");
+        linkElem.textContent = link.text;
+        linkElem.setAttribute("href", "#");
+        linkElem.classList.add(link.clazz);
+        linkElem.addEventListener("click", function(event) {
+            showPane(event, link.theLink, "narrido-pc-page-pane", link.clazz);
+        });
+
+        listItem.appendChild(linkElem);
+        pageNav.appendChild(listItem);
+
+    });
+    
+    return pageNav;
+}
+
+function showPcTabs(pc) {
+    var pageContent = $(".narrido-pc-page-content").empty();
+
+    pageContent.appendChild(pcPageNav(pc));
+
+    var panes = [
+        {
+            title: "pc-page-description-"
+        },
+        {
+            title: "pc-page-installed-"
+        },
+        {
+            title: "pc-page-running-"
+        },
+        {
+            title: "pc-page-usage-log-"
+        },
+        {
+            title: "pc-page-usage-issues-"
+        }
+    ];
+    panes.forEach(function(pane) {
+        var groupPane = document.createElement("div");
+        
+        groupPane.className = "narrido-pc-page-pane";
+        groupPane.style.display = "none";
+        groupPane.id = pane.title + pc.pcId;
+        
+        if(pane.content) groupPane.appendChild(pane.content);
+        
+        pageContent.appendChild(groupPane);
+        
+    });
+    
+    //add show items here
 }

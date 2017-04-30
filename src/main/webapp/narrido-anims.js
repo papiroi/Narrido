@@ -76,6 +76,15 @@ var newsFeedModule = {
         linkText: "Reports",
         linkSymbol: '<i class = "fa fa-file-text"></i>',
         disp: showReports
+    },
+    
+    pcPageModule = {
+        paneId: "pc-page",
+        className: "narrido-main-link",
+        linkText: "PC Page",
+        isNotOnMenu: true,
+        linkSymbol: '<i class = "fa fa-file-text"></i>',
+        disp: showPcPage //TODO define method
     };
     
 var genericModules = [
