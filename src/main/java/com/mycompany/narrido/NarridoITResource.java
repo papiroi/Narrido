@@ -427,7 +427,7 @@ public class NarridoITResource {
     
     /**
      * Yet another Fake JAX RS response that gives fake running program list
-     * For the sake of demonstration and testing, of course
+     * For the sake of demonstration and testing
      * @return a string of running programs
      */
     @GET

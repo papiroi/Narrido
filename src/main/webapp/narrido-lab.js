@@ -23,15 +23,17 @@ function showMonitoring() {
                 .html("Computer Laboratory " + (i + 1)).appendTo(labCombo);
     }
     
-    var buttonDiv = $("<div/>", {class: "col-xs-3 offset-xs-5"}).appendTo(row);
-    var button = $("<button/>", {
-        type: "button",
-        class: "form-control btn btn-primary"
-    }).html("+ New Monitoring")
-            .on("click", function() {addMonitoring(labCombo.val());})
-            .appendTo(buttonDiv);
-    
-    $("<div/>", {class: "container", id: "monitoring-content"}).appendTo(monitoringPane);
+    if(userObj === "it-staff") {
+        var buttonDiv = $("<div/>", {class: "col-xs-3 offset-xs-5"}).appendTo(row);
+        var button = $("<button/>", {
+            type: "button",
+            class: "form-control btn btn-primary"
+        }).html("+ New Monitoring")
+                .on("click", function() {addMonitoring(labCombo.val());})
+                .appendTo(buttonDiv);
+
+        $("<div/>", {class: "container", id: "monitoring-content"}).appendTo(monitoringPane);
+    }
     viewMonitoring();
 }
 
@@ -316,13 +318,15 @@ function showPcs() {
                 .html("Computer Laboratory " + (i + 1)).appendTo(labCombo);
     }
     
-    var buttonDiv = $("<div/>", {class: "col-xs-3 offset-xs-2"}).appendTo(row);
-    var button = $("<button/>", {
-        type: "button",
-        class: "form-control btn btn-primary"
-    }).html("+ New PC")
-            .on("click", function() {addPc(labCombo.val());})
-            .appendTo(buttonDiv);
+    if(userObj === "property-supply") {
+        var buttonDiv = $("<div/>", {class: "col-xs-3 offset-xs-2"}).appendTo(row);
+        var button = $("<button/>", {
+            type: "button",
+            class: "form-control btn btn-primary"
+        }).html("+ New PC")
+                .on("click", function() {addPc(labCombo.val());})
+                .appendTo(buttonDiv);
+    }
     
     var buttonDiv2 = $("<div/>", {class: "col-xs-3"}).appendTo(row);
     var button2 = $("<button/>", {
@@ -916,7 +920,7 @@ function showPcPage() {
 }
 
 function openPcPage(pc, event) {
-    $("#narrido-content-title-pc-page").text(pc.pcNumber);
+    $("#narrido-content-title-pc-page").text(pc.pcNumber + " (" + pc.laboratory.labDescription + ")");
     
     showPcTabs(pc);
     showPane(event, "pc-page", "narrido-tab-pane", "narrido-main-link");
@@ -975,7 +979,7 @@ function pcPageNav(pc) {
 function showPcTabs(pc) {
     var pageContent = $(".narrido-pc-page-content").empty();
 
-    pageContent.appendChild(pcPageNav(pc));
+    pageContent.append(pcPageNav(pc));
 
     var panes = [
         {
@@ -991,7 +995,7 @@ function showPcTabs(pc) {
             title: "pc-page-usage-log-"
         },
         {
-            title: "pc-page-usage-issues-"
+            title: "pc-page-issues-"
         }
     ];
     panes.forEach(function(pane) {
@@ -1003,9 +1007,10 @@ function showPcTabs(pc) {
         
         if(pane.content) groupPane.appendChild(pane.content);
         
-        pageContent.appendChild(groupPane);
+        pageContent.append(groupPane);
         
     });
     
-    //add show items here
+    //TODO: super epic strategy: Tablify description, everything else in tabbed panes!
+    //The showXXX methods go here
 }

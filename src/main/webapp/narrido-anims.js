@@ -97,11 +97,14 @@ var studentElements = [
 ];
 
 var facultyElements = [
+    pcModule,
+    pcPageModule,
     supportModule
 ];
 
 var itStaffElements = [
     pcModule,
+    pcPageModule,
     qrCodeModule,
     reportsModule,
     monitoringModule,
@@ -110,6 +113,7 @@ var itStaffElements = [
 
 var deptHeadElements = [
     pcModule,
+    pcPageModule,
     qrCodeModule,
     reportsModule,
     monitoringModule,
@@ -118,6 +122,7 @@ var deptHeadElements = [
 
 var propertySupplyElements = [
     pcModule,
+    pcPageModule,
     qrCodeModule,
     reportsModule,
     monitoringModule,
@@ -126,6 +131,7 @@ var propertySupplyElements = [
 
 var misElements = [
     pcModule,
+    pcPageModule,
     qrCodeModule,
     reportsModule,
     monitoringModule,
