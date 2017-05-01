@@ -23,7 +23,7 @@ function showMonitoring() {
                 .html("Computer Laboratory " + (i + 1)).appendTo(labCombo);
     }
     
-    if(userObj === "it-staff") {
+    if(userObj.type === "it-staff") {
         var buttonDiv = $("<div/>", {class: "col-xs-3 offset-xs-5"}).appendTo(row);
         var button = $("<button/>", {
             type: "button",
@@ -317,7 +317,7 @@ function showPcs() {
                 .html("Computer Laboratory " + (i + 1)).appendTo(labCombo);
     }
     
-    if(userObj === "property-supply") {
+    if(userObj.type === "property-supply") {
         var buttonDiv = $("<div/>", {class: "col-xs-3 offset-xs-2"}).appendTo(row);
         var button = $("<button/>", {
             type: "button",

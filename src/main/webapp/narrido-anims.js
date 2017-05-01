@@ -92,7 +92,15 @@ var newsFeedModule = {
         className: "narrido-main-link",
         linkText: "Activity Log",
         linkSymbol: '<i class = "fa fa-list"></i>',
-        disp: showAuditTrail //TODO
+        disp: showAuditTrail
+    },
+    
+    aaccupModule = {
+        paneId: "aaccup",
+        className: "narrido-main-link",
+        linkText: "AACCUP Dashboard",
+        linkSymbol: '<i class = "fa fa-list"></i>',
+        disp: showAACCUP //TODO
     };
     
 var genericModules = [
@@ -120,6 +128,7 @@ var itStaffElements = [
 ];
 
 var deptHeadElements = [
+    aaccupModule,
     pcModule,
     pcPageModule,
     qrCodeModule,
@@ -130,6 +139,7 @@ var deptHeadElements = [
 ];
 
 var propertySupplyElements = [
+    aaccupModule,
     pcModule,
     pcPageModule,
     qrCodeModule,
@@ -140,6 +150,7 @@ var propertySupplyElements = [
 ];
 
 var misElements = [
+    aaccupModule,
     pcModule,
     pcPageModule,
     qrCodeModule,
@@ -528,7 +539,7 @@ function showAuditTrail() {
             trails.forEach(function(trail) {
                 var row = $("<tr/>").appendTo(body);
                 $("<td/>").append(nameHeader(trail.who, "sm")).appendTo(row);
-                $("<td/>").text(trail.remarks).appendTo(row);
+                $("<td/>").text(trail.description).appendTo(row);
                 
                 var date = new Date(trail.dateDone);
                 var dateString = date.toDateString() + " " + date.toLocaleTimeString();
@@ -553,6 +564,10 @@ function showPane(evt, paneName, paneClass, linkClass) {
     document.getElementById(paneName).style.display = "block";
 
     evt.currentTarget.classList.add("active");
+}
+
+function showAACCUP() {
+    
 }
 
 function nameHeader(user, size = "md") {

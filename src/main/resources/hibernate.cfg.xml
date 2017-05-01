@@ -57,6 +57,7 @@ Contributor(s):
     <mapping class="com.mycompany.narrido.pojo.NarridoFile" file="" jar="" package="" resource=""/>
     <mapping class="com.mycompany.narrido.pojo.NarridoLaboratory"/>
     <mapping class="com.mycompany.narrido.pojo.NarridoDailyMonitoring" file="" jar="" package="" resource=""/>
-    <mapping class="com.mycompany.narrido.pojo.NarridoJob"/>
+    <mapping class="com.mycompany.narrido.pojo.NarridoJob" file="" jar="" package="" resource=""/>
+    <mapping class="com.mycompany.narrido.pojo.NarridoAuditTrail"/>
   </session-factory>
 </hibernate-configuration>
