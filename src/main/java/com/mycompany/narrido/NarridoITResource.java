@@ -232,6 +232,54 @@ public class NarridoITResource {
         }
     }
     
+    
+    @PUT
+    @Path("/pc")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response addPc(final NarridoPc pc) {
+        NarridoUser user = null;
+        try {
+            String token = context.getHeaderString(HttpHeaders.AUTHORIZATION);
+            if (token != null) {
+                Jws<Claims> claims = NarridoAuth.authenticate(token.substring("Bearer".length()));
+                user = NarridoGeneric.getSingle(NarridoUser.class, NarridoUser_.username, claims.getBody().getSubject());
+            } else {
+                return Response.status(Response.Status.FORBIDDEN)
+                        .entity("Login required")
+                        .build();
+            }
+            
+            
+            //super epic efficient getting of users
+            
+            pc.setId(NarridoGeneric.doThing(NarridoOperation.UPDATE, pc));
+            
+            String url = "http://localhost:8080/files/qr/" + NarridoQR.getQr(pc);
+            NarridoFile nf = new NarridoFile();
+            nf.setDateUploaded(new Date());
+            nf.setFileName(pc.getPcName() + " " + pc.getLaboratory().getLabDescription() + "(UPDATED).png");
+            nf.setFileUrl(url);
+            nf.setUploader(user);
+            nf.setFileType("qr");
+            
+            NarridoGeneric.saveThing(nf);
+            
+            NarridoPushResource npr = rcontext.getResource(NarridoPushResource.class);
+            npr.sendToEveryone(pc);
+            npr.sendToEveryone(nf);
+            
+            return Response.ok("PC saved!").build();
+        } catch (JwtException | HibernateException e) {
+            return Response.status(Response.Status.FORBIDDEN)
+                    .entity(NarridoGeneric.getStackTrace(e))
+                    .build();
+        } catch (NoResultException ne) {
+            return Response.status(Response.Status.NOT_FOUND)
+                    .entity(ne.getMessage())
+                    .build();
+        }
+    }
+    
     @GET
     @Path("/pc/{labId}/report")
     public Response getReport(@PathParam("labId") Integer labId) {
@@ -251,8 +299,8 @@ public class NarridoITResource {
             laboratory = NarridoGeneric.getSingle(NarridoLaboratory.class, NarridoLaboratory_.labId, labId);
             List<NarridoPc> pcs = NarridoGeneric.getList(NarridoPc.class, NarridoPc_.laboratory, laboratory);
             
-            DateFormat df = new SimpleDateFormat("M d y hhmm");
-            String fileName = "PC Report " + laboratory.getLabDescription() + df.format(new Date()) + ".pdf";
+            DateFormat df = new SimpleDateFormat("MMM d y hhmm");
+            String fileName = "PC Report " + laboratory.getLabDescription() + " " + df.format(new Date()) + ".pdf";
             String url = NarridoIO.DIR + "reports/" + fileName;
             String siteUrl = "http://localhost:8080/files/reports/" + fileName;
             
@@ -453,11 +501,15 @@ public class NarridoITResource {
      */
     @GET
     @Path("/pc/software")
+    @Produces(MediaType.APPLICATION_JSON)
     public Response getInstalledSoftware(/*I could use a pc number...*/) {
         String[] apps = {
             "NetBeans IDE 8.1",
             "Visual Studio Ultimate 2012",
-            "",
+            "Adobe Photoshop CS6",
+            "Dev-C++ 5.9.9.2",
+            "Java(TM) Runtime Environment 1.8.0",
+            "USB Defender",
             "DOTA 2",
             "Steam", //of course steam is required
             "Chrome"
@@ -477,6 +529,7 @@ public class NarridoITResource {
      */
     @GET
     @Path("/pc/running")
+    @Produces(MediaType.APPLICATION_JSON)
     public Response getRunningPrograms(/*I could use a pc number...*/) {
         String[] apps = {
             "DOTA 2",

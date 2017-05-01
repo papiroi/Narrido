@@ -31,9 +31,8 @@ function showMonitoring() {
         }).html("+ New Monitoring")
                 .on("click", function() {addMonitoring(labCombo.val());})
                 .appendTo(buttonDiv);
-
-        $("<div/>", {class: "container", id: "monitoring-content"}).appendTo(monitoringPane);
     }
+    $("<div/>", {class: "container", id: "monitoring-content"}).appendTo(monitoringPane);
     viewMonitoring();
 }
 
@@ -584,6 +583,205 @@ function addPcBody(labId) {
     return container;
 }
 
+function updatePcBody(pc) {
+    var container = $("<div/>", {class: "container"});
+    var isNelia = userObj.type === "property-supply";
+    var isLiane = userObj.type === "mis-officer";
+    
+    var form = $("<form/>")
+            .on("submit", function(event) {
+                event.preventDefault();
+                //TODO: set pc properties here
+                
+                if(isNelia || isLiane) {
+                    pc.pcNumber = $("#pc-pc-number-edit").val();
+                    pc.pcName = $("#pc-pc-name-edit").val();
+                    pc.pcDescription = $("#pc-pc-description-edit").val();
+                    pc.serialNumber = $("#pc-serial-number-edit").val();
+                    pc.propertyNumber = $("#pc-property-number-edit").val();
+                    pc.unitValue = $("#pc-unit-value-edit").val();
+                    pc.mr = $("#pc-mr-edit").val();
+                    pc.reMr = $("#pc-re-mr-edit").val();
+                }
+                
+                pc.status = $("#pc-status-edit").val();
+                
+                $.ajax({
+                    type: "PUT",
+                    url: "/Narrido-1.0-SNAPSHOT/api/it/pc/",
+                    data: JSON.stringify(pc),
+                    contentType: "application/json",
+                    success: function(response) {
+                        showModal($("<p/>").text(response), "Update PC info");
+                    },
+                    error: function (xhr) {
+                        showModal($("<p/>").text(xhr.responsText), "Update PC info");
+                    }
+                });
+            })
+            .appendTo(container);
+    
+    var titleRow = $("<div/>", {class: "form-group row"})
+            .append($("<h3/>").text("Edit PC"))
+            .appendTo(form);
+    
+    if(isNelia || isLiane) {
+        var pcNumberRow = $("<div/>", {class: "form-group row"})
+                .appendTo(form);
+
+        var pcNumberDiv = $("<div/>", {class: "col-xs-12"})
+                .appendTo(pcNumberRow);
+
+        $("<input/>", {
+            type: "text",
+            id: "pc-pc-number-edit",
+            placeholder: "PC Number",
+            required: true,
+            class: "form-control",
+            value: pc.pcNumber
+        }).appendTo(pcNumberDiv);
+
+
+        var pcNameRow = $("<div/>", {class: "form-group row"})
+                .appendTo(form);
+
+        var pcNameDiv = $("<div/>", {class: "col-xs-12"})
+                .appendTo(pcNameRow);
+
+        $("<input/>", {
+            type: "text",
+            id: "pc-pc-name-edit",
+            placeholder: "PC Name",
+            required: true,
+            class: "form-control",
+            value: pc.pcName
+        }).appendTo(pcNameDiv);
+
+
+        var pcDescriptionRow = $("<div/>", {class: "form-group row"})
+                .appendTo(form);
+
+        var pcDescriptionDiv = $("<div/>", {class: "col-xs-12"})
+                .appendTo(pcDescriptionRow);
+
+        $("<textarea/>", {
+            id: "pc-pc-description-edit",
+            placeholder: "PC Description",
+            required: true,
+            class: "form-control",
+            value: pc.pcDescription
+        }).appendTo(pcDescriptionDiv);
+
+
+        var serialNumberRow = $("<div/>", {class: "form-group row"})
+                .appendTo(form);
+
+        var serialNumberDiv = $("<div/>", {class: "col-xs-12"})
+                .appendTo(serialNumberRow);
+
+        $("<input/>", {
+            type: "text",
+            id: "pc-serial-number-edit",
+            placeholder: "Serial Number",
+            class: "form-control",
+            value: pc.serialNumber
+        }).appendTo(serialNumberDiv);
+
+
+        var propertyNumberRow = $("<div/>", {class: "form-group row"})
+                .appendTo(form);
+
+        var propertyNumberDiv = $("<div/>", {class: "col-xs-12"})
+                .appendTo(propertyNumberRow);
+
+        $("<input/>", {
+            type: "text",
+            id: "pc-property-number-edit",
+            placeholder: "Property Number",
+            class: "form-control",
+            value: pc.propertyNumber
+        }).appendTo(propertyNumberDiv);
+
+
+        var unitValueRow = $("<div/>", {class: "form-group row"})
+                .appendTo(form);
+
+        var unitValueDiv = $("<div/>", {class: "col-xs-12"})
+                .appendTo(unitValueRow);
+
+        $("<input/>", {
+            type: "number",
+            id: "pc-unit-value-edit",
+            placeholder: "Unit Value",
+            class: "form-control",
+            value: pc.unitValue
+        }).appendTo(unitValueDiv);
+
+
+        var mrRow = $("<div/>", {class: "form-group row"})
+                .appendTo(form);
+
+        var mrDiv = $("<div/>", {class: "col-xs-12"})
+                .appendTo(mrRow);
+
+        $("<input/>", {
+            type: "text",
+            id: "pc-mr-edit",
+            placeholder: "PAR Issued To",
+            class: "form-control",
+            value: pc.mr
+        }).appendTo(mrDiv);
+
+
+        var reMrRow = $("<div/>", {class: "form-group row"})
+                .appendTo(form);
+
+        var reMrDiv = $("<div/>", {class: "col-xs-12"})
+                .appendTo(reMrRow);
+
+        $("<input/>", {
+            type: "text",
+            id: "pc-re-mr-edit",
+            placeholder: "Memorandum of Receipt Re-Issued To",
+            class: "form-control",
+            value: pc.reMr
+        }).appendTo(reMrDiv);
+    }
+    
+    var statusComboRow = $("<div/>", {class: "form-group row"})
+                .appendTo(form);
+
+    var statusComboDiv = $("<div/>", {class: "col-xs-12"})
+            .appendTo(statusComboRow);
+
+    var statusCombo = $("<select/>", {
+        id: "pc-status-edit",
+        class: "form-control"
+    }).appendTo(statusComboDiv);
+    
+    var statuses = ["WORKING", "DEFFECTIVE", "UNSERVICEABLE", isNelia ? "CONDEMNED" : undefined];
+    
+    statuses.forEach(function(status) {
+        if(status) {
+            $("<option/>", {value: status}).text(status).appendTo(statusCombo);
+        }
+    });
+    
+    var buttonRow = $("<div/>", {class: "form-group row"})
+            .appendTo(form);
+    
+    var buttonDiv = $("<div/>", {class: "col-xs-12"})
+            .appendTo(buttonRow);
+    
+    $("<button/>", {
+        type: "submit",
+        value: "Submit",
+        class: "btn btn-primary"
+    }).text("Submit").appendTo(buttonDiv);
+    
+    return container;
+}
+
 function showSupport() {
     var supportPane = $("#support");
     
@@ -922,13 +1120,27 @@ function showPcPage() {
 function openPcPage(pc, event) {
     $("#narrido-content-title-pc-page").text(pc.pcNumber + " (" + pc.laboratory.labDescription + ")");
     
+    $("<button/>", {
+        type: "button",
+        class: "btn btn-primary"
+    }).html("View details").on("click", function() {
+        $("#pc-page-table").toggle();
+    }).appendTo($(".narrido-pc-page-content"));
+    
+    $("<button/>", {
+        type: "button",
+        class: "btn btn-primary"
+    }).html("Update info").on("click", function() {
+        showModal(updatePcBody(), "Update PC");
+    }).appendTo($(".narrido-pc-page-content"));
+            
     showPcTabs(pc);
     showPane(event, "pc-page", "narrido-tab-pane", "narrido-main-link");
 }
 
 function pcDescriptionTable(pc) {
     var pcPageContent = $(".narrido-pc-page-content");
-    var table = $("<table/>", {class: "table"}).appendTo(pcPageContent);
+    var table = $("<table/>", {class: "table table-sm", id: "pc-page-table"}).hide().appendTo(pcPageContent);
     
     var body = $("<tbody/>").appendTo(table);
     
@@ -1007,6 +1219,7 @@ function pcPageNav(pc) {
         linkElem.setAttribute("href", "#");
         linkElem.classList.add(link.clazz);
         linkElem.addEventListener("click", function(event) {
+            event.preventDefault();
             showPane(event, link.theLink, "narrido-pc-page-pane", link.clazz);
         });
 
@@ -1064,7 +1277,10 @@ function showTestData(pc) {
         type: "GET",
         url: "/Narrido-1.0-SNAPSHOT/api/it/pc/software",
         success: function(data) {
-            programsPane.text(data);
+            var ul = $("<ul/>").appendTo(programsPane);
+            data.forEach(function(datum) {
+                $("<li/>").text(datum).appendTo(ul);
+            });
         }
     });
     
@@ -1072,15 +1288,27 @@ function showTestData(pc) {
         type: "GET",
         url: "/Narrido-1.0-SNAPSHOT/api/it/pc/running",
         success: function(data) {
-            runningPane.text(data);
+            var ul = $("<ul/>").appendTo(runningPane);
+            data.forEach(function(datum) {
+                $("<li/>").text(datum).appendTo(ul);
+            });
         }
     });
     
     $.ajax({
         type: "GET",
         url: "/Narrido-1.0-SNAPSHOT/api/it/pc/logs",
-        success: function(data) {
-            usagePane.text(data);
+        success: function(logs) {
+            var table = $("<table/>", {class: "table"}).appendTo(usagePane);
+            var body = $("<tbody/>").appendTo(table);
+            
+            logs.forEach(function(log) {
+               var row = $("<tr/>").appendTo(body);
+               
+               var date = new Date(log.date).toDateString() + " " + new Date(log.date).toLocaleTimeString();
+               $("<td/>").text(date).appendTo(row);
+               $("<td/>").text(log.log).appendTo(row);
+            });
         }
     });
 }
