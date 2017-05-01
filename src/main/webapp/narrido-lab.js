@@ -922,7 +922,6 @@ function showPcPage() {
 function openPcPage(pc, event) {
     $("#narrido-content-title-pc-page").text(pc.pcNumber + " (" + pc.laboratory.labDescription + ")");
     
-    pcDescriptionTable(pc)
     showPcTabs(pc);
     showPane(event, "pc-page", "narrido-tab-pane", "narrido-main-link");
 }
@@ -1022,6 +1021,7 @@ function pcPageNav(pc) {
 function showPcTabs(pc) {
     var pageContent = $(".narrido-pc-page-content").empty();
 
+    pcDescriptionTable(pc);
     pageContent.append(pcPageNav(pc));
 
     var panes = [
@@ -1086,7 +1086,7 @@ function showTestData(pc) {
 }
 
 function showIssues(pc) {
-    var issuesPane = $("#pc-page-usage-log-" + pc.id);
+    var issuesPane = $("#pc-page-issues-" + pc.id);
     
     $.ajax({
         type: "GET",

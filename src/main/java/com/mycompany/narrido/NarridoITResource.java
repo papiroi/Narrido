@@ -454,7 +454,20 @@ public class NarridoITResource {
     @GET
     @Path("/pc/software")
     public Response getInstalledSoftware(/*I could use a pc number...*/) {
-        return Response.ok("NetBeans IDE 8.1\nMicrosoft Office 2010\nMicrosoft Visual Studio 2012\nAdobe Photoshop CS6\nSteam\nDOTA 2\nHalf-Life\nChrome").build();
+        String[] apps = {
+            "NetBeans IDE 8.1",
+            "Visual Studio Ultimate 2012",
+            "",
+            "DOTA 2",
+            "Steam", //of course steam is required
+            "Chrome"
+        };
+        
+        List<String> installed = new ArrayList<>();
+        for(String app : apps) {
+            installed.add(app);
+        }
+        return Response.ok(installed).build();
     }
     
     /**
@@ -465,8 +478,19 @@ public class NarridoITResource {
     @GET
     @Path("/pc/running")
     public Response getRunningPrograms(/*I could use a pc number...*/) {
-        //of course steam is required
-        return Response.ok("DOTA 2 \nSteam \nResume ko 2 - Microsoft Word \nUntitled - Chrome").build();
+        String[] apps = {
+            "DOTA 2",
+            "Steam", //of course steam is required
+            "Docu for thesis - Microsoft Word",
+            "Untitled - Chrome"
+        };
+        
+        List<String> runnings = new ArrayList<>();
+        for(String app : apps) {
+            runnings.add(app);
+        }
+        
+        return Response.ok(runnings).build();
     }
     
     @GET
