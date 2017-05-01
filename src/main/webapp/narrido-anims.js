@@ -84,7 +84,15 @@ var newsFeedModule = {
         linkText: "PC Page",
         isNotOnMenu: true,
         linkSymbol: '<i class = "fa fa-file-text"></i>',
-        disp: showPcPage //TODO define method
+        disp: showPcPage
+    },
+    
+    auditTrailModule = {
+        paneId: "audit-trail",
+        className: "narrido-main-link",
+        linkText: "Activity Log",
+        linkSymbol: '<i class = "fa fa-list"></i>',
+        disp: showAuditTrail //TODO
     };
     
 var genericModules = [
@@ -117,7 +125,8 @@ var deptHeadElements = [
     qrCodeModule,
     reportsModule,
     monitoringModule,
-    supportModule
+    supportModule,
+    auditTrailModule
 ];
 
 var propertySupplyElements = [
@@ -126,7 +135,8 @@ var propertySupplyElements = [
     qrCodeModule,
     reportsModule,
     monitoringModule,
-    supportModule
+    supportModule,
+    auditTrailModule
 ];
 
 var misElements = [
@@ -135,7 +145,8 @@ var misElements = [
     qrCodeModule,
     reportsModule,
     monitoringModule,
-    supportModule
+    supportModule,
+    auditTrailModule
 ];
 
 var loginButton = document.getElementById("login-button");
@@ -496,6 +507,32 @@ function getMyReports() {
                     .append($("<a/>", {href: file.fileUrl}).text(file.fileName))
                     .append($("<span/>", {class: "close"}).html("&times;"))
                     .appendTo(column);
+            });
+        }
+    });
+}
+
+function showAuditTrail() {
+    var auditTrailPane = $("#audit-trail");
+    
+    var container = $("<div/>", {class: "container"}).appendTo(auditTrailPane);
+    
+    var table = $("<table/>", {class: "table table-sm"}).appendTo(container);
+    var body = $("<tbody/>", {id: "narrido-audit-trail-table"}).appendTo(table);
+    
+    $.ajax({
+        type: "GET",
+        url: "/Narrido-1.0-SNAPSHOT/api/it/log",
+        dataType: "json",
+        success: function(trails) {
+            trails.forEach(function(trail) {
+                var row = $("<tr/>").appendTo(body);
+                $("<td/>").append(nameHeader(trail.who, "sm")).appendTo(row);
+                $("<td/>").text(trail.remarks).appendTo(row);
+                
+                var date = new Date(trail.dateDone);
+                var dateString = date.toDateString() + " " + date.toLocaleTimeString();
+                $("<td/>").text(dateString).appendTo(row);
             });
         }
     });

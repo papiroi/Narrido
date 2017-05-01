@@ -13,6 +13,7 @@ import com.mycompany.narrido.helper.NarridoGeneric.NarridoOperation;
 import com.mycompany.narrido.helper.NarridoIO;
 import com.mycompany.narrido.helper.NarridoReport;
 import com.mycompany.narrido.helper.NarridoType;
+import com.mycompany.narrido.pojo.NarridoAuditTrail;
 import com.mycompany.narrido.pojo.NarridoDailyMonitoring;
 import com.mycompany.narrido.pojo.NarridoDailyMonitoring_;
 import com.mycompany.narrido.pojo.NarridoFile;
@@ -573,6 +574,37 @@ public class NarridoITResource {
         logs.add(new LogData("Logged in (Jay Dominguez)", new Date()));
         
         return Response.ok(logs).build();
+    }
+    
+    @GET
+    @Path("/log")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAuditTrail() {
+        NarridoUser user = null;
+        List<NarridoAuditTrail> trails;
+        try {
+            String token = context.getHeaderString(HttpHeaders.AUTHORIZATION);
+            if (token != null) {
+                Jws<Claims> claims = NarridoAuth.authenticate(token.substring("Bearer".length()));
+                user = NarridoGeneric.getSingle(NarridoUser.class, NarridoUser_.username, claims.getBody().getSubject());
+            } else {
+                return Response.status(Response.Status.FORBIDDEN)
+                        .entity("Login required")
+                        .build();
+            }
+            
+            trails = NarridoGeneric.getList(NarridoAuditTrail.class);
+            
+            return Response.ok(trails).build();
+        } catch (JwtException | HibernateException e) {
+            return Response.status(Response.Status.FORBIDDEN)
+                    .entity(NarridoGeneric.getStackTrace(e))
+                    .build();
+        } catch (NoResultException ne) {
+            return Response.status(Response.Status.NOT_FOUND)
+                    .entity("Laboratory not found")
+                    .build();
+        }
     }
 }
 

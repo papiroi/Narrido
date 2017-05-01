@@ -591,7 +591,6 @@ function updatePcBody(pc) {
     var form = $("<form/>")
             .on("submit", function(event) {
                 event.preventDefault();
-                //TODO: set pc properties here
                 
                 if(isNelia || isLiane) {
                     pc.pcNumber = $("#pc-pc-number-edit").val();
@@ -606,10 +605,15 @@ function updatePcBody(pc) {
                 
                 pc.status = $("#pc-status-edit").val();
                 
+                var pcUpdateData = {
+                    pc: pc,
+                    remarks: $("#pc-update-remarks-edit").val()
+                };
+                
                 $.ajax({
                     type: "PUT",
                     url: "/Narrido-1.0-SNAPSHOT/api/it/pc/",
-                    data: JSON.stringify(pc),
+                    data: JSON.stringify(pcUpdateData),
                     contentType: "application/json",
                     success: function(response) {
                         showModal($("<p/>").text(response), "Update PC info");
@@ -657,7 +661,6 @@ function updatePcBody(pc) {
             value: pc.pcName
         }).appendTo(pcNameDiv);
 
-
         var pcDescriptionRow = $("<div/>", {class: "form-group row"})
                 .appendTo(form);
 
@@ -670,7 +673,6 @@ function updatePcBody(pc) {
             required: true,
             class: "form-control"
         }).val(pc.pcDescription).appendTo(pcDescriptionDiv);
-
 
         var serialNumberRow = $("<div/>", {class: "form-group row"})
                 .appendTo(form);
@@ -765,6 +767,19 @@ function updatePcBody(pc) {
             $("<option/>", {value: status}).text(status).appendTo(statusCombo);
         }
     });
+    
+    var updateRemarksRow = $("<div/>", {class: "form-group row"})
+                .appendTo(form);
+
+    var updateRemarksDiv = $("<div/>", {class: "col-xs-12"})
+            .appendTo(updateRemarksRow);
+
+    $("<textarea/>", {
+        id: "pc-update-remarks-edit",
+        placeholder: "Update Remarks (eg. changed status to working)",
+        required: true,
+        class: "form-control"
+    }).val(pc.pcDescription).appendTo(updateRemarksDiv);
     
     var buttonRow = $("<div/>", {class: "form-group row"})
             .appendTo(form);
