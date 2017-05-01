@@ -6,8 +6,11 @@
 package com.mycompany.narrido.helper;
 
 import static com.mycompany.narrido.helper.SFH.getSF;
+import com.mycompany.narrido.pojo.NarridoAuditTrail;
+import com.mycompany.narrido.pojo.NarridoUser;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
@@ -170,5 +173,15 @@ public final class NarridoGeneric {
         
         e.printStackTrace(pw);
         return sw.getBuffer().toString();
+    }
+    
+    public static NarridoAuditTrail logTrail(NarridoUser who, String description) {
+        NarridoAuditTrail nat = new NarridoAuditTrail();
+        nat.setWho(who);
+        nat.setDescription(description);
+        nat.setDateDone(new Date());
+        
+        saveThing(nat);
+        return nat;
     }
 }

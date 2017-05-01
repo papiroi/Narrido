@@ -127,14 +127,12 @@ public class NarridoITResource {
             
             //super epic efficient getting of users
             NarridoPushResource npr = rcontext.getResource(NarridoPushResource.class);
-            List<NarridoUser> techs = NarridoGeneric.getList(NarridoUser.class, NarridoUser_.type, "it-staff");
-            techs.addAll(NarridoGeneric.getList(NarridoUser.class, NarridoUser_.type, NarridoType.D_HEAD));
-            techs.addAll(NarridoGeneric.getList(NarridoUser.class, NarridoUser_.type, NarridoType.MIS));
-            techs.addAll(NarridoGeneric.getList(NarridoUser.class, NarridoUser_.type, NarridoType.PROPERTY_SUPPLY));
+            npr.sendToEveryone(monitoring);
             
-            for(NarridoUser tech : techs) {
-                npr.send(tech.getUsername(), monitoring);
-            }
+            //put it to log
+            npr.sendToEveryone(
+                    NarridoGeneric.logTrail(user, "Added monitoring entry for " + laboratory.getLabDescription())
+            );
             
             return Response.ok("Monitoring saved!").build();
         } catch (JwtException | HibernateException e) {
@@ -219,6 +217,9 @@ public class NarridoITResource {
             NarridoPushResource npr = rcontext.getResource(NarridoPushResource.class);
             npr.sendToEveryone(pc);
             npr.sendToEveryone(nf);
+            npr.sendToEveryone(
+                    NarridoGeneric.logTrail(user, "Added new PC: " + pc.getPcNumber() + " at " + laboratory.getLabDescription())
+            );
             
             return Response.ok("PC saved!").build();
         } catch (JwtException | HibernateException e) {
@@ -232,11 +233,10 @@ public class NarridoITResource {
         }
     }
     
-    
     @PUT
     @Path("/pc")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response addPc(final NarridoPc pc) {
+    public Response updatePc(final PcUpdateData pud) {
         NarridoUser user = null;
         try {
             String token = context.getHeaderString(HttpHeaders.AUTHORIZATION);
@@ -252,7 +252,9 @@ public class NarridoITResource {
             
             //super epic efficient getting of users
             
-            pc.setId(NarridoGeneric.doThing(NarridoOperation.UPDATE, pc));
+            NarridoPc pc = pud.getPc();
+            
+            NarridoGeneric.doThing(NarridoOperation.UPDATE, pud.getPc());
             
             String url = "http://localhost:8080/files/qr/" + NarridoQR.getQr(pc);
             NarridoFile nf = new NarridoFile();
@@ -265,10 +267,12 @@ public class NarridoITResource {
             NarridoGeneric.saveThing(nf);
             
             NarridoPushResource npr = rcontext.getResource(NarridoPushResource.class);
-            npr.sendToEveryone(pc);
             npr.sendToEveryone(nf);
+            npr.sendToEveryone(
+                    NarridoGeneric.logTrail(user, "Updated PC: " + pc.getPcNumber() + "(" + pud.getRemarks() + ")")
+            );
             
-            return Response.ok("PC saved!").build();
+            return Response.ok("PC info updated!").build();
         } catch (JwtException | HibernateException e) {
             return Response.status(Response.Status.FORBIDDEN)
                     .entity(NarridoGeneric.getStackTrace(e))
@@ -410,6 +414,9 @@ public class NarridoITResource {
             
             NarridoPushResource npr = rcontext.getResource(NarridoPushResource.class);
             npr.sendToEveryone(job);
+            npr.sendToEveryone(
+                    NarridoGeneric.logTrail(user, "Updated issue # " + job.getJobId() + ": " + job.getReport() + "(" + job.getStatus() + ")")
+            );
             return Response.ok("Report updated!").build();
         } catch (JwtException | HibernateException e) {
             return Response.status(Response.Status.FORBIDDEN)
@@ -597,4 +604,30 @@ class LogData {
     public void setDate(Date date) {
         this.date = date;
     }
+}
+
+class PcUpdateData {
+    private NarridoPc pc;
+    private String remarks;
+
+    public PcUpdateData() {
+    }
+
+    public NarridoPc getPc() {
+        return pc;
+    }
+
+    public void setPc(NarridoPc pc) {
+        this.pc = pc;
+    }
+
+    public String getRemarks() {
+        return remarks;
+    }
+
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
+    }
+    
+    
 }

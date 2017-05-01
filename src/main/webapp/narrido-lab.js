@@ -668,9 +668,8 @@ function updatePcBody(pc) {
             id: "pc-pc-description-edit",
             placeholder: "PC Description",
             required: true,
-            class: "form-control",
-            value: pc.pcDescription
-        }).appendTo(pcDescriptionDiv);
+            class: "form-control"
+        }).val(pc.pcDescription).appendTo(pcDescriptionDiv);
 
 
         var serialNumberRow = $("<div/>", {class: "form-group row"})
@@ -1120,26 +1119,13 @@ function showPcPage() {
 function openPcPage(pc, event) {
     $("#narrido-content-title-pc-page").text(pc.pcNumber + " (" + pc.laboratory.labDescription + ")");
     
-    $("<button/>", {
-        type: "button",
-        class: "btn btn-primary"
-    }).html("View details").on("click", function() {
-        $("#pc-page-table").toggle();
-    }).appendTo($(".narrido-pc-page-content"));
-    
-    $("<button/>", {
-        type: "button",
-        class: "btn btn-primary"
-    }).html("Update info").on("click", function() {
-        showModal(updatePcBody(), "Update PC");
-    }).appendTo($(".narrido-pc-page-content"));
-            
     showPcTabs(pc);
     showPane(event, "pc-page", "narrido-tab-pane", "narrido-main-link");
 }
 
 function pcDescriptionTable(pc) {
     var pcPageContent = $(".narrido-pc-page-content");
+    
     var table = $("<table/>", {class: "table table-sm", id: "pc-page-table"}).hide().appendTo(pcPageContent);
     
     var body = $("<tbody/>").appendTo(table);
@@ -1233,6 +1219,20 @@ function pcPageNav(pc) {
 
 function showPcTabs(pc) {
     var pageContent = $(".narrido-pc-page-content").empty();
+
+    $("<button/>", {
+        type: "button",
+        class: "btn btn-primary"
+    }).html("View details").on("click", function() {
+        $("#pc-page-table").toggle();
+    }).appendTo(pageContent);
+    
+    $("<button/>", {
+        type: "button",
+        class: "btn btn-primary"
+    }).html("Update info").on("click", function() {
+        showModal(updatePcBody(pc), "Update PC");
+    }).appendTo(pageContent);
 
     pcDescriptionTable(pc);
     pageContent.append(pcPageNav(pc));
