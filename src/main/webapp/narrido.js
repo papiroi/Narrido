@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 
-//TODO: Major to do: add view pc
 
 var loginButton = document.getElementById("login-button");
 var regButton = document.getElementById("reg-button");

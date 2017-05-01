@@ -376,7 +376,7 @@ public class NarridoITResource {
     
     @GET
     @Path("/support")
-    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     public Response getTickets(@QueryParam("status") String status) {
         NarridoUser user = null;
         List<NarridoJob> jobs;
@@ -411,6 +411,38 @@ public class NarridoITResource {
         } catch (NoResultException ne) {
             return Response.status(Response.Status.NOT_FOUND)
                     .entity("Laboratory not found")
+                    .build();
+        }
+    }
+    
+    @GET
+    @Path("/support/pc/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getTickets(@PathParam("id") Integer pcId) {
+        NarridoUser user = null;
+        List<NarridoJob> jobs;
+        try {
+            String token = context.getHeaderString(HttpHeaders.AUTHORIZATION);
+            if (token != null) {
+                Jws<Claims> claims = NarridoAuth.authenticate(token.substring("Bearer".length()));
+                user = NarridoGeneric.getSingle(NarridoUser.class, NarridoUser_.username, claims.getBody().getSubject());
+            } else {
+                return Response.status(Response.Status.FORBIDDEN)
+                        .entity("Login required")
+                        .build();
+            }
+            
+            NarridoPc pc = NarridoGeneric.getSingle(NarridoPc.class, NarridoPc_.id, pcId);
+            jobs = NarridoGeneric.getList(NarridoJob.class, NarridoJob_.pc, pc);
+            
+            return Response.ok(jobs).build();
+        } catch (JwtException | HibernateException e) {
+            return Response.status(Response.Status.FORBIDDEN)
+                    .entity(NarridoGeneric.getStackTrace(e))
+                    .build();
+        } catch (NoResultException ne) {
+            return Response.status(Response.Status.NOT_FOUND)
+                    .entity("PC not found")
                     .build();
         }
     }

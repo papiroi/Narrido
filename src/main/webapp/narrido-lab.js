@@ -922,8 +922,56 @@ function showPcPage() {
 function openPcPage(pc, event) {
     $("#narrido-content-title-pc-page").text(pc.pcNumber + " (" + pc.laboratory.labDescription + ")");
     
+    pcDescriptionTable(pc)
     showPcTabs(pc);
     showPane(event, "pc-page", "narrido-tab-pane", "narrido-main-link");
+}
+
+function pcDescriptionTable(pc) {
+    var pcPageContent = $(".narrido-pc-page-content");
+    var table = $("<table/>", {class: "table"}).appendTo(pcPageContent);
+    
+    var body = $("<tbody/>").appendTo(table);
+    
+    var idRow = $("<tr/>").appendTo(body);
+    $("<th/>", {scope: "row"}).text("ID: ").appendTo(idRow);
+    $("<td/>").text(pc.id).appendTo(idRow);
+    
+    var numberRow = $("<tr/>").appendTo(body);
+    $("<th/>", {scope: "row"}).text("PC Nr.: ").appendTo(numberRow);
+    $("<td/>").text(pc.pcNumber).appendTo(numberRow);
+    
+    var descriptionRow = $("<tr/>").appendTo(body);
+    $("<th/>", {scope: "row"}).text("Description: ").appendTo(descriptionRow);
+    $("<td/>").text(pc.pcDescription).appendTo(descriptionRow);
+    
+    var dateAcquiredRow = $("<tr/>").appendTo(body);
+    $("<th/>", {scope: "row"}).text("Date Acquired: ").appendTo(dateAcquiredRow);
+    $("<td/>").text(pc.dateAcquired).appendTo(dateAcquiredRow);
+    
+    var serialNumberRow = $("<tr/>").appendTo(body);
+    $("<th/>", {scope: "row"}).text("Serial Number: ").appendTo(serialNumberRow);
+    $("<td/>").text(pc.serialNumber).appendTo(serialNumberRow);
+    
+    var propertyNumberRow = $("<tr/>").appendTo(body);
+    $("<th/>", {scope: "row"}).text("Property Number: ").appendTo(propertyNumberRow);
+    $("<td/>").text(pc.propertyNumber).appendTo(propertyNumberRow);
+    
+    var unitValueRow = $("<tr/>").appendTo(body);
+    $("<th/>", {scope: "row"}).text("Unit Value: ").appendTo(unitValueRow);
+    $("<td/>").text(pc.unitValue).appendTo(unitValueRow);
+    
+    var statusRow = $("<tr/>").appendTo(body);
+    $("<th/>", {scope: "row"}).text("Operational Status: ").appendTo(statusRow);
+    $("<td/>").text(pc.status).appendTo(statusRow);
+    
+    var mrRow = $("<tr/>").appendTo(body);
+    $("<th/>", {scope: "row"}).text("PAR Assigned To: ").appendTo(mrRow);
+    $("<td/>").text(pc.mr).appendTo(mrRow);
+    
+    var reMrRow = $("<tr/>").appendTo(body);
+    $("<th/>", {scope: "row"}).text("Re-MR To: ").appendTo(reMrRow);
+    $("<td/>").text(pc.reMr).appendTo(reMrRow);
 }
 
 function pcPageNav(pc) {
@@ -932,28 +980,23 @@ function pcPageNav(pc) {
     
     var linkz = [
         {
-            text: "Description",
-            theLink: "pc-page-description-" + pc.pcId,
-            clazz: "narrido-pc-page-link"
-        },
-        {
             text: "Installed Programs",
-            theLink: "pc-page-installed-"  + pc.pcId,
+            theLink: "pc-page-installed-"  + pc.id,
             clazz: "narrido-pc-page-link"
         },
         {
             text: "Running Programs",
-            theLink: "pc-page-running-" + pc.pcId,
+            theLink: "pc-page-running-" + pc.id,
             clazz: "narrido-pc-page-link"
         },
         {
             text: "Usage Log",
-            theLink: "pc-page-usage-log-" + pc.pcId,
+            theLink: "pc-page-usage-log-" + pc.id,
             clazz: "narrido-pc-page-link"
         },
         {
             text: "Issues",
-            theLink: "pc-page-issues-" + pc.pcId,
+            theLink: "pc-page-issues-" + pc.id,
             clazz: "narrido-pc-page-link"
         }
     ];
@@ -983,9 +1026,6 @@ function showPcTabs(pc) {
 
     var panes = [
         {
-            title: "pc-page-description-"
-        },
-        {
             title: "pc-page-installed-"
         },
         {
@@ -1003,7 +1043,7 @@ function showPcTabs(pc) {
         
         groupPane.className = "narrido-pc-page-pane";
         groupPane.style.display = "none";
-        groupPane.id = pane.title + pc.pcId;
+        groupPane.id = pane.title + pc.id;
         
         if(pane.content) groupPane.appendChild(pane.content);
         
@@ -1011,6 +1051,49 @@ function showPcTabs(pc) {
         
     });
     
-    //TODO: super epic strategy: Tablify description, everything else in tabbed panes!
-    //The showXXX methods go here
+    showTestData(pc);
+    showIssues(pc);
+}
+
+function showTestData(pc) {
+    var programsPane = $("#pc-page-installed-" + pc.id);
+    var runningPane = $("#pc-page-running-" + pc.id);
+    var usagePane = $("#pc-page-usage-log-" + pc.id);
+    
+    $.ajax({
+        type: "GET",
+        url: "/Narrido-1.0-SNAPSHOT/api/it/pc/software",
+        success: function(data) {
+            programsPane.text(data);
+        }
+    });
+    
+    $.ajax({
+        type: "GET",
+        url: "/Narrido-1.0-SNAPSHOT/api/it/pc/running",
+        success: function(data) {
+            runningPane.text(data);
+        }
+    });
+    
+    $.ajax({
+        type: "GET",
+        url: "/Narrido-1.0-SNAPSHOT/api/it/pc/logs",
+        success: function(data) {
+            usagePane.text(data);
+        }
+    });
+}
+
+function showIssues(pc) {
+    var issuesPane = $("#pc-page-usage-log-" + pc.id);
+    
+    $.ajax({
+        type: "GET",
+        url: "/Narrido-1.0-SNAPSHOT/api/it/support/pc/" + pc.id,
+        data: "json",
+        success: function(tickets) {
+            issuesPane.append(tablifySupport(tickets));
+        }
+    });
 }
