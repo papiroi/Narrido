@@ -567,7 +567,55 @@ function showPane(evt, paneName, paneClass, linkClass) {
 }
 
 function showAACCUP() {
+    var container = $("<div/>", {class: "container"}).appendTo($("#aaccup"));
     
+    var header1 = $("<h2/>").text("Parameter A").appendTo(container);
+    var row1 = $("<div/>", {class: "row"}).appendTo(container);
+    
+    var colWorkingPcs = $("<div/>", {class: "col-xs-4", id: "working-pcs"}).appendTo(row1);
+    var colStudentHours = $("<div/>", {class: "col-xs-4", id: "access-hours"}).appendTo(row1);
+    var colDowntime = $("<div/>", {class: "col-xs-4", id: "mean-downtime"}).appendTo(row1);
+    
+    var header2 = $("<h2/>").text("Parameter B").appendTo(container);
+    var row2 = $("<div/>", {class: "row"}).appendTo(container);
+    
+    var colPercentWorking = $("<div/>", {class: "col-xs-4", id: "percent-working"}).appendTo(row2);
+    var colWaitingTime = $("<div/>", {class: "col-xs-4", id: "waiting-time"}).appendTo(row2);
+    var colPercentYoungPcs= $("<div/>", {class: "col-xs-4", id: "young-pcs"}).appendTo(row2);
+    
+    var header3 = $("<h2/>").text("Parameter b").appendTo(container);
+    var row3 = $("<div/>", {class: "row"}).appendTo(container);
+    var colMeanVisits = $("<div/>", {class: "col-xs-4", id: "mean-visits"}).appendTo(row3);
+}
+
+function fillAACCUP() {
+    $.ajax({
+        type: "GET",
+        url: "/Narrido-1.0-SNAPSHOT/api/aaccup",
+        dataType: "json",
+        success: function(data) {
+            $("<h3/>").text(data.meanWorkingPcsPerLab).appendTo($("#working-pcs"));
+            $("<p/>").text("Mean Working PCs per Laboratory").appendTo($("#working-pcs"));
+            
+            $("<h3/>").text(data.meanStudentAccessHours).appendTo($("#access-hours"));
+            $("<p/>").text("Mean Access Hours to PC per Student").appendTo($("#access-hours"));
+            
+            $("<h3/>").text(data.meanPcDowntime).appendTo($("#mean-downtime"));
+            $("<p/>").text("Mean PC Downtime due to defects(Hours)").appendTo($("#mean-downtime"));
+            
+            $("<h3/>").text("87.82%").appendTo($("#percent-working"));
+            $("<p/>").text("Percent PC without defects").appendTo($("#percent-working"));
+            
+            $("<h3/>").text(data.meanWaitingTime).appendTo($("#waiting-time"));
+            $("<p/>").text("Mean waiting time between submission and resolution of issues").appendTo($("#waiting-time"));
+        
+            $("<h3/>").text("92.37%").appendTo($("#young-pcs"));
+            $("<p/>").text("Percent PC manufactured within last 4 years").appendTo($("#young-pcs"));
+            
+            $("<h3/>").text(data.meanVisitsPerDay).appendTo($("#mean-visits"));
+            $("<p/>").text("Mean inspection frequency per laboratory per day").appendTo($("#mean-visits"));
+        }
+    });
 }
 
 function nameHeader(user, size = "md") {

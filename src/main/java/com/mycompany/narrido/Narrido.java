@@ -47,6 +47,7 @@ public class Narrido extends ResourceConfig{
      * If required, comment out calling this method in getClasses().
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
+        resources.add(com.mycompany.narrido.NarridoAaccupResource.class);
         resources.add(com.mycompany.narrido.NarridoAccountResource.class);
         resources.add(com.mycompany.narrido.NarridoFileIOResource.class);
         resources.add(com.mycompany.narrido.NarridoGroupResource.class);
