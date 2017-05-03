@@ -571,6 +571,72 @@ public class NarridoITResource {
         }
     }
     
+    @GET
+    @Path("/support/report")
+    public Response reportTickets() {
+        NarridoUser user = null;
+        try {
+            String token = context.getHeaderString(HttpHeaders.AUTHORIZATION);
+            if (token != null) {
+                Jws<Claims> claims = NarridoAuth.authenticate(token.substring("Bearer".length()));
+                user = NarridoGeneric.getSingle(NarridoUser.class, NarridoUser_.username, claims.getBody().getSubject());
+            } else {
+                return Response.status(Response.Status.FORBIDDEN)
+                        .entity("Login required")
+                        .build();
+            }
+            
+            List<NarridoJob> jobs = NarridoGeneric.getList(NarridoJob.class);
+            
+            DateFormat df = new SimpleDateFormat("MMM d y hhmm");
+            String fileName = "Job Summary " + df.format(new Date()) + ".pdf";
+            String url = NarridoIO.DIR + "reports/" + fileName;
+            String siteUrl = "http://localhost:8080/files/reports/" + fileName;
+            
+            
+            java.nio.file.Path path = Paths.get(NarridoIO.DIR + "reports/");
+        
+            if(!Files.exists(path)) {
+                Files.createDirectories(path);
+            }
+
+            File theFile = new File(url);
+
+            if(theFile.exists()) {
+                theFile.delete();
+                System.out.println("File duplicate; delete!");
+            }
+            
+            theFile = new File(url);
+            NarridoReport.generateJobReport(jobs, theFile);
+            
+            NarridoFile file = new NarridoFile();
+            file.setFileType("report");
+            file.setFileName(fileName);
+            file.setFileUrl(siteUrl);
+            file.setUploader(user);
+            file.setDateUploaded(new Date());
+            
+            NarridoGeneric.saveThing(file);
+            NarridoPushResource npr = rcontext.getResource(NarridoPushResource.class);
+            npr.sendToEveryone(file);
+            
+            return Response.ok("Report generated!").build();
+        } catch (JwtException e) {
+            return Response.status(Response.Status.FORBIDDEN)
+                    .entity(e.getMessage())
+                    .build();
+        } catch (NoResultException ne) {
+            return Response.status(Response.Status.NOT_FOUND)
+                    .entity("No laboratory found")
+                    .build();
+        } catch (JRException | IOException je) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity(je.getMessage())
+                    .build();
+        }
+    } //TODO refactor report generation endpoints
+    
     /**
      * Fake JAX RS response to get installed software list on a machine.
      * @return a string of installed programs

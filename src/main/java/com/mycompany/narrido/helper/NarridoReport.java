@@ -71,10 +71,10 @@ public class NarridoReport {
     public static void main(String[] args) throws JRException, FileNotFoundException{
         SFH.init();
 
-        File file = new File("C:/NarridoFileUploads/test_report.pdf");
-        List<NarridoDailyMonitoring> monitorings = NarridoGeneric.getList(NarridoDailyMonitoring.class);
+        File file = new File("C:/NarridoFileUploads/test_report_job.pdf");
+        List<NarridoJob> monitorings = NarridoGeneric.getList(NarridoJob.class);
         
-        generateMonitoringReport(monitorings, "CvSU Imus", file);
+        generateJobReport(monitorings, file);
     }
     
     

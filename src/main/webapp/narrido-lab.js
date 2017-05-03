@@ -854,6 +854,30 @@ function showSupport() {
                 .html(stat.description).appendTo(statusCombo);
     });
     
+    var pwede = userObj.type === "it-staff" || userObj.type === "property-supply" || userObj.type === "mis-officer";
+    
+    if(pwede) {
+        var buttonDiv2 = $("<div/>", {class: "col-xs-3 offset-xs-2"}).appendTo(row);
+        var button2 = $("<button/>", {
+            type: "button",
+            class: "form-control btn btn-primary"
+        }).html("Generate Report")
+                .on("click", function() {
+                    showModal($("<p/>").text("Generating Report..."), "Generate Report");
+                    $.ajax({
+                        type: "GET",
+                        url: "/Narrido-1.0-SNAPSHOT/api/it/support/report",
+                        success: function (response) {
+                            showModal($("<p/>").text(response), "Generate Report");
+                        },
+                        error: function (xhr) {
+                            showModal($("<p/>").text(xhr.responseText), "Generate Report");
+                        }
+                    });
+                })
+                .appendTo(buttonDiv2);
+    }
+    
     var buttonDiv = $("<div/>", {class: "col-xs-3"}).appendTo(row);
     var button = $("<button/>", {
         type: "button",

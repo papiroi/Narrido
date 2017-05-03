@@ -100,7 +100,7 @@ var newsFeedModule = {
         className: "narrido-main-link",
         linkText: "AACCUP Dashboard",
         linkSymbol: '<i class = "fa fa-list"></i>',
-        disp: showAACCUP //TODO
+        disp: showAACCUP
     };
     
 var genericModules = [
