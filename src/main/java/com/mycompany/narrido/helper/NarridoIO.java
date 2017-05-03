@@ -55,7 +55,6 @@ public final class NarridoIO {
         try{
             
             InputStreamReader isr = new InputStreamReader(istream);
-            if(!isr.ready()) throw new NarridoIOException();
             
             OutputStream ostream = null;
             int read = 0;

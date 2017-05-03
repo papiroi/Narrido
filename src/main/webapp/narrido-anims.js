@@ -583,9 +583,11 @@ function showAACCUP() {
     var colWaitingTime = $("<div/>", {class: "col-xs-4", id: "waiting-time"}).appendTo(row2);
     var colPercentYoungPcs= $("<div/>", {class: "col-xs-4", id: "young-pcs"}).appendTo(row2);
     
-    var header3 = $("<h2/>").text("Parameter b").appendTo(container);
+    var header3 = $("<h2/>").text("Parameter C").appendTo(container);
     var row3 = $("<div/>", {class: "row"}).appendTo(container);
     var colMeanVisits = $("<div/>", {class: "col-xs-4", id: "mean-visits"}).appendTo(row3);
+    
+    fillAACCUP();
 }
 
 function fillAACCUP() {

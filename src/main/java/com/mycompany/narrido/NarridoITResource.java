@@ -353,6 +353,74 @@ public class NarridoITResource {
         }
     }
     
+    @GET
+    @Path("/monitoring/{labId}/report")
+    public Response getMonitoringReport(@PathParam("labId") Integer labId) {
+        NarridoUser user = null;
+        NarridoLaboratory laboratory = null;
+        try {
+            String token = context.getHeaderString(HttpHeaders.AUTHORIZATION);
+            if (token != null) {
+                Jws<Claims> claims = NarridoAuth.authenticate(token.substring("Bearer".length()));
+                user = NarridoGeneric.getSingle(NarridoUser.class, NarridoUser_.username, claims.getBody().getSubject());
+            } else {
+                return Response.status(Response.Status.FORBIDDEN)
+                        .entity("Login required")
+                        .build();
+            }
+            
+            laboratory = NarridoGeneric.getSingle(NarridoLaboratory.class, NarridoLaboratory_.labId, labId);
+            List<NarridoDailyMonitoring> monitorings = NarridoGeneric.getList(NarridoDailyMonitoring.class, NarridoDailyMonitoring_.laboratory, laboratory);
+            
+            DateFormat df = new SimpleDateFormat("MMM d y hhmm");
+            String fileName = "Monitoring Report " + laboratory.getLabDescription() + " " + df.format(new Date()) + ".pdf";
+            String url = NarridoIO.DIR + "reports/" + fileName;
+            String siteUrl = "http://localhost:8080/files/reports/" + fileName;
+            
+            
+            java.nio.file.Path path = Paths.get(NarridoIO.DIR + "reports/");
+        
+            if(!Files.exists(path)) {
+                Files.createDirectories(path);
+            }
+
+            File theFile = new File(url);
+
+            if(theFile.exists()) {
+                theFile.delete();
+                System.out.println("File duplicate; delete!");
+            }
+            
+            theFile = new File(url);
+            NarridoReport.generateMonitoringReport(monitorings, laboratory.getLabDescription(), theFile);
+            
+            NarridoFile file = new NarridoFile();
+            file.setFileType("report");
+            file.setFileName(fileName);
+            file.setFileUrl(siteUrl);
+            file.setUploader(user);
+            file.setDateUploaded(new Date());
+            
+            NarridoGeneric.saveThing(file);
+            NarridoPushResource npr = rcontext.getResource(NarridoPushResource.class);
+            npr.sendToEveryone(file);
+            
+            return Response.ok("Report generated!").build();
+        } catch (JwtException e) {
+            return Response.status(Response.Status.FORBIDDEN)
+                    .entity(e.getMessage())
+                    .build();
+        } catch (NoResultException ne) {
+            return Response.status(Response.Status.NOT_FOUND)
+                    .entity("No laboratory found")
+                    .build();
+        } catch (JRException | IOException je) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity(je.getMessage())
+                    .build();
+        }
+    }
+    
     @POST
     @Path("/support")
     @Consumes(MediaType.APPLICATION_JSON)

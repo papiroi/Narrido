@@ -536,7 +536,9 @@ public class NarridoGroupResource {
             narridoFile.setFileType("file");
             
         } catch (NarridoIOException nioe) {
-            System.err.println(nioe.getMessage());
+            return Response.status(Status.FORBIDDEN).entity(
+                NarridoGeneric.getStackTrace(nioe)
+            ).build();
         }
         
         //save the post unceremoniously

@@ -121,7 +121,7 @@ public class NarridoFileIOResource {
         } catch(NarridoIO.NarridoIOException | HibernateException ne) {
             return Response
                     .status(Status.FORBIDDEN)
-                    .entity(ne.getMessage())
+                    .entity(NarridoGeneric.getStackTrace(ne))
                     .build();
         }
         

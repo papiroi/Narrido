@@ -23,8 +23,28 @@ function showMonitoring() {
                 .html("Computer Laboratory " + (i + 1)).appendTo(labCombo);
     }
     
+    var buttonDiv2 = $("<div/>", {class: "col-xs-3 offset-xs-2"}).appendTo(row);
+    var button2 = $("<button/>", {
+        type: "button",
+        class: "form-control btn btn-primary"
+    }).html("Generate Report")
+            .on("click", function() {
+                showModal($("<p/>").text("Generating Report..."), "Generate Report");
+                $.ajax({
+                    type: "GET",
+                    url: "/Narrido-1.0-SNAPSHOT/api/it/monitoring/" + labCombo.val() + "/report",
+                    success: function (response) {
+                        showModal($("<p/>").text(response), "Generate Report");
+                    },
+                    error: function (xhr) {
+                        showModal($("<p/>").text(xhr.responseText), "Generate Report");
+                    }
+                });
+            })
+            .appendTo(buttonDiv2);
+    
     if(userObj.type === "it-staff") {
-        var buttonDiv = $("<div/>", {class: "col-xs-3 offset-xs-5"}).appendTo(row);
+        var buttonDiv = $("<div/>", {class: "col-xs-3"}).appendTo(row);
         var button = $("<button/>", {
             type: "button",
             class: "form-control btn btn-primary"
@@ -32,6 +52,8 @@ function showMonitoring() {
                 .on("click", function() {addMonitoring(labCombo.val());})
                 .appendTo(buttonDiv);
     }
+    
+    
     $("<div/>", {class: "container", id: "monitoring-content"}).appendTo(monitoringPane);
     viewMonitoring();
 }
@@ -831,26 +853,6 @@ function showSupport() {
         $("<option/>", {value: stat.value})
                 .html(stat.description).appendTo(statusCombo);
     });
-    
-    var buttonDiv2 = $("<div/>", {class: "col-xs-3 offset-xs-4"}).appendTo(row);
-    var button2 = $("<button/>", {
-        type: "button",
-        class: "form-control btn btn-primary"
-    }).html("Generate Report")
-            .on("click", function() {
-                showModal($("<p/>").text("Generating Report..."), "Generate Report");
-                $.ajax({
-                    type: "GET",
-                    url: "replace me with report url ok", //TODO
-                    success: function (response) {
-                        showModal($("<p/>").text(response), "Generate Report");
-                    },
-                    error: function (xhr) {
-                        showModal($("<p/>").text(xhr.responseText), "Generate Report");
-                    }
-                });
-            })
-            .appendTo(buttonDiv2);
     
     var buttonDiv = $("<div/>", {class: "col-xs-3"}).appendTo(row);
     var button = $("<button/>", {

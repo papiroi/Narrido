@@ -5,6 +5,7 @@
  */
 package com.mycompany.narrido.helper;
 
+import com.mycompany.narrido.pojo.NarridoDailyMonitoring;
 import com.mycompany.narrido.pojo.NarridoPc;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -18,7 +19,6 @@ import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
-import org.jboss.logging.Logger;
 
 /**
  *
@@ -36,4 +36,27 @@ public class NarridoReport {
         JasperPrint jp = JasperFillManager.fillReport(REPORT_DIR + "DarthVader.jasper", params, new JREmptyDataSource());
         JasperExportManager.exportReportToPdfStream(jp, new FileOutputStream(file));
     }
+    
+    public static void generateMonitoringReport(List<NarridoDailyMonitoring> monitorings, String laboratory, File file) throws JRException, FileNotFoundException{
+        Map<String, Object> params = new HashMap<>();
+        List<NarridoDailyMonitoring> beans = monitorings;
+
+        JRBeanCollectionDataSource mrBeanSource = new JRBeanCollectionDataSource(beans);
+        params.put("MonitoringDataSource", mrBeanSource);
+        params.put("LaboratoryName", laboratory);
+
+        JasperPrint jp = JasperFillManager.fillReport(REPORT_DIR + "DarthSidious.jasper", params, new JREmptyDataSource());
+        JasperExportManager.exportReportToPdfStream(jp, new FileOutputStream(file));
+    }
+    
+    public static void main(String[] args) throws JRException, FileNotFoundException{
+        SFH.init();
+
+        File file = new File("C:/NarridoFileUploads/test_report.pdf");
+        List<NarridoDailyMonitoring> monitorings = NarridoGeneric.getList(NarridoDailyMonitoring.class);
+        
+        generateMonitoringReport(monitorings, "CvSU Imus", file);
+    }
+    
+    
 }
