@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
+<!-- 2017-05-04T06:46:54 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="DarthMall" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="892b98d0-31d6-4a91-a804-cb70f118804d">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<parameter name="Qty" class="java.lang.String"/>
+	<parameter name="Unit" class="java.lang.String"/>
+	<parameter name="Description" class="java.lang.String"/>
+	<parameter name="TotalAmount" class="java.lang.Double"/>
+	<parameter name="Note" class="java.lang.String"/>
+	<parameter name="ReceivedFrom" class="java.lang.String"/>
+	<parameter name="ReceivedFromPosition" class="java.lang.String"/>
+	<parameter name="ReceivedBy" class="java.lang.String"/>
+	<parameter name="ReceivedByPosition" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="85" splitType="Stretch">
+			<rectangle>
+				<reportElement mode="Transparent" x="0" y="-1" width="572" height="86" uuid="ba729df7-daec-4b04-af19-86eee288e593"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="186" y="0" width="200" height="30" uuid="c812a983-9f8e-45f7-abf8-719a0ebf7090"/>
+				<textElement textAlignment="Center">
+					<font fontName="Bookman Old Style" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CAVITE STATE UNIVERSITY
+Imus Campus]]></text>
+			</staticText>
+			<image>
+				<reportElement x="145" y="1" width="41" height="41" uuid="bd85e3d1-6456-45ed-b3eb-2d3e2601fc69"/>
+				<imageExpression><![CDATA["C:/Users/Dell/Desktop/thesis ni mhirro/CVSU_logo.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="186" y="24" width="201" height="30" uuid="e140cad8-9c80-44e2-ac50-5042305f795b"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="9" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[Cavite Civic Center Palico IV, City of Imus, Cavite
+(046) 471-66-07 / (046) 471-67-70 / (046) 686-2349
+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="244" y="50" width="85" height="16" uuid="699e9126-3781-4192-8092-70a327e6a480"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="9" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[www.cvsu.edu.ph]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="38" splitType="Stretch">
+			<rectangle>
+				<reportElement mode="Transparent" x="0" y="0" width="572" height="38" uuid="34d403c7-e348-4c79-841b-b422d19a615f"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="211" y="-2" width="148" height="39" uuid="83a69d09-98b6-4239-b519-6cb00f21c39e"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[INVENTORY CUSTODIAN SLIP]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="35" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="50" height="35" uuid="db823ede-bfc4-426c-ab5c-0a955ce4ed77"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Qty]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="50" y="0" width="50" height="35" uuid="f7e9e478-4d9b-4058-9bcf-8a2c77283a75"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Unit]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="100" y="0" width="210" height="35" uuid="9b066088-bb18-4f08-9a0e-f5bc5fbcdb91"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Description]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="310" y="0" width="76" height="35" uuid="a91b44bc-07c6-4e8b-a7db-04355c7954e5"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Total Amount]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="386" y="0" width="83" height="35" uuid="6424d7ab-cdbc-4374-8e86-74b2612c4f81"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Inventory]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="469" y="0" width="103" height="35" uuid="a19bc950-deae-4e8b-a05d-7638c208e229"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Estimated Useful Life]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="182" splitType="Stretch">
+			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
+			<textField>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="50" height="182" isPrintInFirstWholeBand="true" uuid="366a4c65-8c60-485a-9f91-6b82d7581436"/>
+				<box>
+					<leftPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textFieldExpression><![CDATA[$P{Qty}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="50" y="0" width="50" height="182" isPrintInFirstWholeBand="true" uuid="13a8dc4d-800f-417a-8bd6-44759042a10a"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textFieldExpression><![CDATA[$P{Unit}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement key="" positionType="Float" stretchType="RelativeToBandHeight" isPrintRepeatedValues="false" x="100" y="0" width="210" height="182" uuid="b5ff82d5-cf9d-458e-800e-4df74ba257e5"/>
+				<box>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textFieldExpression><![CDATA[$P{Description}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="310" y="0" width="76" height="182" isPrintInFirstWholeBand="true" uuid="9efb40dc-9026-48b2-9860-37688237bcc8"/>
+				<box>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textFieldExpression><![CDATA[$P{TotalAmount}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="387" y="0" width="82" height="182" isPrintInFirstWholeBand="true" uuid="8a58f10c-d7ea-4978-bd95-f6468671a327"/>
+				<box>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="469" y="0" width="103" height="182" isPrintInFirstWholeBand="true" uuid="72ec2124-b2b0-4d31-8785-053c8b86bc43"/>
+				<box>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="37" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="572" height="37" uuid="95b8bbaa-51ee-46c5-ac2c-4c584b6cf53d"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textFieldExpression><![CDATA["Note:" + " " + $P{Note}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="150" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="30" width="310" height="20" uuid="c37a1c8c-5908-404b-b7c9-efe01211505b"/>
+				<box>
+					<leftPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$P{ReceivedFrom}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="50" width="310" height="20" uuid="7f97cd49-2183-4ec2-b636-c4761037c139"/>
+				<box>
+					<leftPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Top"/>
+				<textFieldExpression><![CDATA[$P{ReceivedFromPosition}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="0" width="310" height="30" uuid="d7bf50ac-6df9-4099-ac74-d320d8eb63f7"/>
+				<box>
+					<leftPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<text><![CDATA[Received From]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="0" y="110" width="310" height="20" uuid="ebbfe201-0d67-415c-9dba-9976a020125c"/>
+				<box>
+					<leftPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$P{ReceivedBy}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="130" width="310" height="20" uuid="ded1e5b1-5cf8-49b6-a479-f665a4517c5d"/>
+				<box>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Top"/>
+				<textFieldExpression><![CDATA[$P{ReceivedByPosition}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="70" width="310" height="40" uuid="2c909502-8f14-46b0-b21f-833dfffe95aa"/>
+				<box>
+					<leftPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Received by]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="310" y="30" width="262" height="120" uuid="5f88d3a5-0e59-4f83-a726-a8035bf9eaa5"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Liza C. Costa, Ph. D.
+Campus Dean]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="310" y="0" width="262" height="30" uuid="4fe9bccf-1bcf-4f2b-bf02-60b275b56756"/>
+				<box>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<text><![CDATA[Approved]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+</jasperReport>
