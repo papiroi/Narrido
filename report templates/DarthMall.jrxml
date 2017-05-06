@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
-<!-- 2017-05-04T06:46:54 -->
+<!-- 2017-05-06T09:19:27 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="DarthMall" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="892b98d0-31d6-4a91-a804-cb70f118804d">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<parameter name="Qty" class="java.lang.String"/>
@@ -16,38 +16,45 @@
 		<![CDATA[]]>
 	</queryString>
 	<background>
-		<band splitType="Stretch"/>
+		<band height="752" splitType="Stretch">
+			<frame>
+				<reportElement x="0" y="0" width="572" height="752" uuid="51926686-e9ea-4f48-aa38-788e6b74bf76"/>
+				<box>
+					<pen lineWidth="1.0"/>
+				</box>
+			</frame>
+		</band>
 	</background>
 	<title>
 		<band height="85" splitType="Stretch">
 			<rectangle>
-				<reportElement mode="Transparent" x="0" y="-1" width="572" height="86" uuid="ba729df7-daec-4b04-af19-86eee288e593"/>
+				<reportElement mode="Transparent" x="0" y="0" width="572" height="85" uuid="ba729df7-daec-4b04-af19-86eee288e593"/>
 			</rectangle>
 			<staticText>
-				<reportElement x="186" y="0" width="200" height="30" uuid="c812a983-9f8e-45f7-abf8-719a0ebf7090"/>
+				<reportElement x="185" y="16" width="200" height="30" uuid="c812a983-9f8e-45f7-abf8-719a0ebf7090"/>
 				<textElement textAlignment="Center">
-					<font fontName="Bookman Old Style" size="11" isBold="true"/>
+					<font fontName="NewFontFamily" size="11" isBold="true"/>
 				</textElement>
 				<text><![CDATA[CAVITE STATE UNIVERSITY
 Imus Campus]]></text>
 			</staticText>
 			<image>
-				<reportElement x="145" y="1" width="41" height="41" uuid="bd85e3d1-6456-45ed-b3eb-2d3e2601fc69"/>
-				<imageExpression><![CDATA["C:/Users/Dell/Desktop/thesis ni mhirro/CVSU_logo.png"]]></imageExpression>
+				<reportElement x="144" y="17" width="41" height="41" uuid="bd85e3d1-6456-45ed-b3eb-2d3e2601fc69"/>
+				<imageExpression><![CDATA["CVSU_logo.png"]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement x="186" y="24" width="201" height="30" uuid="e140cad8-9c80-44e2-ac50-5042305f795b"/>
+				<reportElement x="185" y="40" width="201" height="30" uuid="e140cad8-9c80-44e2-ac50-5042305f795b"/>
 				<textElement textAlignment="Center">
-					<font fontName="Times New Roman" size="9" isUnderline="false"/>
+					<font fontName="Times" size="9" isUnderline="false"/>
 				</textElement>
 				<text><![CDATA[Cavite Civic Center Palico IV, City of Imus, Cavite
 (046) 471-66-07 / (046) 471-67-70 / (046) 686-2349
 ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="244" y="50" width="85" height="16" uuid="699e9126-3781-4192-8092-70a327e6a480"/>
+				<reportElement x="243" y="66" width="85" height="16" uuid="699e9126-3781-4192-8092-70a327e6a480"/>
 				<textElement textAlignment="Center">
-					<font fontName="Times New Roman" size="9" isUnderline="true"/>
+					<font fontName="Times" size="9" isUnderline="true"/>
 				</textElement>
 				<text><![CDATA[www.cvsu.edu.ph]]></text>
 			</staticText>
@@ -144,18 +151,21 @@ Imus Campus]]></text>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="182" splitType="Stretch">
+		<band height="407" splitType="Stretch">
 			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 			<textField>
-				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="50" height="182" isPrintInFirstWholeBand="true" uuid="366a4c65-8c60-485a-9f91-6b82d7581436"/>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="50" height="407" isPrintInFirstWholeBand="true" uuid="366a4c65-8c60-485a-9f91-6b82d7581436"/>
 				<box>
-					<leftPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textFieldExpression><![CDATA[$P{Qty}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="50" y="0" width="50" height="182" isPrintInFirstWholeBand="true" uuid="13a8dc4d-800f-417a-8bd6-44759042a10a"/>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="50" y="0" width="50" height="407" isPrintInFirstWholeBand="true" uuid="13a8dc4d-800f-417a-8bd6-44759042a10a"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -165,30 +175,42 @@ Imus Campus]]></text>
 				<textFieldExpression><![CDATA[$P{Unit}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement key="" positionType="Float" stretchType="RelativeToBandHeight" isPrintRepeatedValues="false" x="100" y="0" width="210" height="182" uuid="b5ff82d5-cf9d-458e-800e-4df74ba257e5"/>
+				<reportElement key="" positionType="Float" stretchType="RelativeToBandHeight" isPrintRepeatedValues="false" x="100" y="0" width="210" height="407" uuid="b5ff82d5-cf9d-458e-800e-4df74ba257e5"/>
 				<box>
-					<rightPen lineWidth="1.0"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textFieldExpression><![CDATA[$P{Description}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="310" y="0" width="76" height="182" isPrintInFirstWholeBand="true" uuid="9efb40dc-9026-48b2-9860-37688237bcc8"/>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="310" y="0" width="76" height="407" isPrintInFirstWholeBand="true" uuid="9efb40dc-9026-48b2-9860-37688237bcc8"/>
 				<box>
-					<rightPen lineWidth="1.0"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textFieldExpression><![CDATA[$P{TotalAmount}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="387" y="0" width="82" height="182" isPrintInFirstWholeBand="true" uuid="8a58f10c-d7ea-4978-bd95-f6468671a327"/>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="387" y="0" width="82" height="407" isPrintInFirstWholeBand="true" uuid="8a58f10c-d7ea-4978-bd95-f6468671a327"/>
 				<box>
-					<rightPen lineWidth="1.0"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textFieldExpression><![CDATA[""]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="469" y="0" width="103" height="182" isPrintInFirstWholeBand="true" uuid="72ec2124-b2b0-4d31-8785-053c8b86bc43"/>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="469" y="0" width="103" height="407" isPrintInFirstWholeBand="true" uuid="72ec2124-b2b0-4d31-8785-053c8b86bc43"/>
 				<box>
-					<rightPen lineWidth="1.0"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textFieldExpression><![CDATA[""]]></textFieldExpression>
 			</textField>

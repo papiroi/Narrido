@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
-<!-- 2017-05-04T08:38:14 -->
+<!-- 2017-05-06T09:40:42 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="DarthVader" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="NoPages" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7d03c8af-8cfd-4c16-9e20-9e51e6a1a07b">
 	<style name="Table_TH" mode="Opaque" backcolor="#FFFFFF">
 		<box>
@@ -84,14 +84,14 @@
 			<staticText>
 				<reportElement x="321" y="0" width="200" height="30" uuid="0b0606cc-3cb2-49b8-9102-9f5ca5c3777d"/>
 				<textElement textAlignment="Center">
-					<font fontName="Bookman Old Style" size="11" isBold="true"/>
+					<font fontName="NewFontFamily" size="11" isBold="true"/>
 				</textElement>
 				<text><![CDATA[CAVITE STATE UNIVERSITY
 Imus Campus]]></text>
 			</staticText>
 			<image>
 				<reportElement x="280" y="1" width="41" height="41" uuid="4a580121-1737-4a23-b8ef-9e92f105685e"/>
-				<imageExpression><![CDATA["C:/Users/Dell/Desktop/thesis ni mhirro/CVSU_logo.png"]]></imageExpression>
+				<imageExpression><![CDATA["CVSU_logo.png"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="321" y="24" width="201" height="30" uuid="cd921782-ef40-40e7-819e-d312d58c9c48"/>
@@ -116,21 +116,21 @@ Imus Campus]]></text>
 			<staticText>
 				<reportElement x="280" y="-1" width="269" height="20" uuid="d60cf0a2-e44d-4921-af31-b096cbc2fb54"/>
 				<textElement textAlignment="Center">
-					<font fontName="Bookman Old Style" size="9" isBold="true"/>
+					<font fontName="NewFontFamily" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[DAILY MONITORING]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="360" y="20" width="36" height="25" uuid="b1b1f544-0878-4e7e-9f84-a2dbb581d07f"/>
 				<textElement>
-					<font fontName="Bookman Old Style" isBold="true"/>
+					<font fontName="NewFontFamily" isBold="true"/>
 				</textElement>
 				<text><![CDATA[As of]]></text>
 			</staticText>
 			<textField pattern="MMMMM, yyyy">
 				<reportElement x="390" y="20" width="110" height="26" uuid="25e2e2e3-0908-4dfc-81d2-b4aaa7a9dbff"/>
 				<textElement>
-					<font fontName="Bookman Old Style" isBold="true"/>
+					<font fontName="NewFontFamily" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
@@ -155,7 +155,7 @@ Imus Campus]]></text>
 							<staticText>
 								<reportElement x="0" y="0" width="100" height="30" uuid="84b358d8-1ae6-4ae6-b1d3-c06876b1d172"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font fontName="Times New Roman"/>
+									<font fontName="Times"/>
 								</textElement>
 								<text><![CDATA[Date]]></text>
 							</staticText>
@@ -173,7 +173,7 @@ Imus Campus]]></text>
 							<staticText>
 								<reportElement x="0" y="0" width="120" height="30" uuid="9be7d913-d98f-4040-8f60-e6e97062620d"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font fontName="Times New Roman"/>
+									<font fontName="Times"/>
 								</textElement>
 								<text><![CDATA[Instructor]]></text>
 							</staticText>
@@ -191,7 +191,7 @@ Imus Campus]]></text>
 							<staticText>
 								<reportElement x="0" y="0" width="80" height="30" uuid="8f720c8a-e1e8-421f-8da8-8f917beba9d7"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font fontName="Times New Roman"/>
+									<font fontName="Times"/>
 								</textElement>
 								<text><![CDATA[Course/Section]]></text>
 							</staticText>
@@ -209,7 +209,7 @@ Imus Campus]]></text>
 							<staticText>
 								<reportElement x="0" y="0" width="70" height="30" uuid="7920c7fc-b4cf-478f-85fc-1ed7187df0e4"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font fontName="Times New Roman"/>
+									<font fontName="Times"/>
 								</textElement>
 								<text><![CDATA[System Unit]]></text>
 							</staticText>
@@ -227,7 +227,7 @@ Imus Campus]]></text>
 							<staticText>
 								<reportElement x="0" y="0" width="70" height="30" uuid="e8f4be06-3124-435a-b7f0-7f52fb87e780"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font fontName="Times New Roman"/>
+									<font fontName="Times"/>
 								</textElement>
 								<text><![CDATA[Monitor]]></text>
 							</staticText>
@@ -245,7 +245,7 @@ Imus Campus]]></text>
 							<staticText>
 								<reportElement x="0" y="0" width="60" height="30" uuid="834dc073-7aa8-45c8-a7fd-21bd14911882"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font fontName="Times New Roman"/>
+									<font fontName="Times"/>
 								</textElement>
 								<text><![CDATA[Keyboard]]></text>
 							</staticText>
@@ -263,7 +263,7 @@ Imus Campus]]></text>
 							<staticText>
 								<reportElement x="0" y="0" width="50" height="30" uuid="1f4c29fa-aba5-4dc2-bd24-b7ecfbef73cb"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font fontName="Times New Roman"/>
+									<font fontName="Times"/>
 								</textElement>
 								<text><![CDATA[Mouse]]></text>
 							</staticText>
@@ -281,7 +281,7 @@ Imus Campus]]></text>
 							<staticText>
 								<reportElement x="0" y="0" width="50" height="30" uuid="e82c8e7d-bd5b-43cc-bcd0-c284d036525a"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font fontName="Times New Roman"/>
+									<font fontName="Times"/>
 								</textElement>
 								<text><![CDATA[AVR]]></text>
 							</staticText>
@@ -299,7 +299,7 @@ Imus Campus]]></text>
 							<staticText>
 								<reportElement x="0" y="0" width="110" height="30" uuid="ad1f5f54-1416-43f6-821f-9092de01b222"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font fontName="Times New Roman"/>
+									<font fontName="Times"/>
 								</textElement>
 								<text><![CDATA[Remarks]]></text>
 							</staticText>
@@ -317,7 +317,7 @@ Imus Campus]]></text>
 							<staticText>
 								<reportElement x="0" y="0" width="90" height="30" uuid="eb7f3f3a-e045-449d-9908-d5a956273ad6"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font fontName="Times New Roman"/>
+									<font fontName="Times"/>
 								</textElement>
 								<text><![CDATA[Comment]]></text>
 							</staticText>
@@ -341,7 +341,7 @@ Imus Campus]]></text>
 			<textField>
 				<reportElement x="50" y="0" width="100" height="20" uuid="bbc47e69-559b-4b7d-97d2-1c063daae697"/>
 				<textElement>
-					<font fontName="Times New Roman"/>
+					<font fontName="Times"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{LaboratoryName}]]></textFieldExpression>
 			</textField>
