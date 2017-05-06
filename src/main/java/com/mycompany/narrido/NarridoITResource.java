@@ -519,8 +519,8 @@ public class NarridoITResource {
             
             if("all".equals(status)) {
                 jobs = !isFaculty ?
-                            NarridoGeneric.getList(NarridoJob.class) :
-                            dao.mySubmittedJobs(user, status);
+                            NarridoGeneric.getList(NarridoJob.class, NarridoJob_.reportedBy, user) :
+                            NarridoGeneric.getList(NarridoJob.class);
             } else {
                 jobs = !isFaculty ?
                             NarridoGeneric.getList(NarridoJob.class, NarridoJob_.status, status) :

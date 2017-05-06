@@ -173,7 +173,7 @@ function addMonitoringBody(labId) {
             .appendTo(dateRow);
     
     $("<input/>", {
-        type: "date",
+        type: "datetime-local",
         id: "monitoring-date",
         class: "form-control"
     }).appendTo(dateDiv);

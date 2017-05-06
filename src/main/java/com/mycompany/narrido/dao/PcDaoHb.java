@@ -11,6 +11,7 @@ import com.mycompany.narrido.pojo.NarridoPc;
 import com.mycompany.narrido.pojo.NarridoPc_;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.TemporalType;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -83,7 +84,7 @@ public class PcDaoHb implements PcDao{
             );
             
             ParameterExpression<Date> date = cb.parameter(Date.class);
-            TypedQuery<NarridoPc> tq = sess.createQuery(cq);
+            TypedQuery<NarridoPc> tq = sess.createQuery(cq).setParameter(date, dateAcquired, TemporalType.DATE);
             pcs = tq.getResultList();
             tx.commit();
         } catch (HibernateException e) {
