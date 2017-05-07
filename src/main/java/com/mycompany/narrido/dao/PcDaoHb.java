@@ -7,7 +7,6 @@ package com.mycompany.narrido.dao;
 import com.mycompany.narrido.dao.ice.PcDao;
 import com.mycompany.narrido.helper.NarridoGeneric;
 import com.mycompany.narrido.helper.SFH;
-import static com.mycompany.narrido.pojo.NarridoFile_.group;
 import com.mycompany.narrido.pojo.NarridoPc;
 import com.mycompany.narrido.pojo.NarridoPc_;
 import java.util.Date;
@@ -15,6 +14,7 @@ import java.util.List;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.ParameterExpression;
 import javax.persistence.criteria.Root;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
@@ -66,7 +66,7 @@ public class PcDaoHb implements PcDao{
     }
 
     @Override
-    public List<NarridoPc> getMrPc(String mr, Date date) {
+    public List<NarridoPc> getMrPc(String mr, Date dateAcquired) {
         List<NarridoPc> pcs = null;
         Session sess = null;
         Transaction tx = null;
@@ -79,11 +79,10 @@ public class PcDaoHb implements PcDao{
             
             Root<NarridoPc> grp = cq.from(NarridoPc.class);
             cq.where(
-                    cb.and(
-                            cb.equal(grp.get(NarridoPc_.reMr), mr)
-                    )
+                    cb.equal(grp.get(NarridoPc_.reMr), mr)
             );
             
+            ParameterExpression<Date> date = cb.parameter(Date.class);
             TypedQuery<NarridoPc> tq = sess.createQuery(cq);
             pcs = tq.getResultList();
             tx.commit();
