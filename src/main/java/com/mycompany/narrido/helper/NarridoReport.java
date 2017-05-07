@@ -68,6 +68,10 @@ public class NarridoReport {
         JasperExportManager.exportReportToPdfStream(jp, new FileOutputStream(file));
     }
     
+    public static void generateReMr() throws JRException, FileNotFoundException {
+        
+    }
+    
     public static void main(String[] args) throws JRException, FileNotFoundException{
         SFH.init();
 
