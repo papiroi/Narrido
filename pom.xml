@@ -44,7 +44,7 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>6.0.4</version>
+            <version>5.1.39</version>
         </dependency>
         
         <dependency>
@@ -123,6 +123,18 @@
             <groupId>net.sf.jasperreports</groupId>
             <artifactId>jasperreports-fonts</artifactId>
             <version>6.0.0</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>aicola</groupId>
+            <artifactId>myfontfamily</artifactId>
+            <version>beta</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>aicola</groupId>
+            <artifactId>times</artifactId>
+            <version>beta</version>
         </dependency>
     </dependencies>
     
