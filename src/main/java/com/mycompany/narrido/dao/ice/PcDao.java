@@ -6,6 +6,7 @@
 package com.mycompany.narrido.dao.ice;
 
 import com.mycompany.narrido.pojo.NarridoPc;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -15,4 +16,5 @@ import java.util.List;
 public interface PcDao {
     List<NarridoPc> getAllPcs();
     NarridoPc getPc(String pcName);
+    List<NarridoPc> getMrPc(String mr, Date date);
 }

@@ -126,16 +126,17 @@
         </dependency>
         
         <dependency>
-            <groupId>aicola</groupId>
+            <groupId>com.narrido</groupId>
             <artifactId>myfontfamily</artifactId>
             <version>beta</version>
         </dependency>
         
         <dependency>
-            <groupId>aicola</groupId>
+            <groupId>com.narrido</groupId>
             <artifactId>times</artifactId>
             <version>beta</version>
         </dependency>
+        
     </dependencies>
     
     <build>
