@@ -5,10 +5,11 @@
  */
 package com.mycompany.narrido.helper;
 
+import com.mycompany.narrido.dao.PcDaoHb;
+import com.mycompany.narrido.dao.ice.PcDao;
 import com.mycompany.narrido.pojo.NarridoDailyMonitoring;
 import com.mycompany.narrido.pojo.NarridoJob;
 import com.mycompany.narrido.pojo.NarridoPc;
-import com.mycompany.narrido.pojo.NarridoUser;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -68,8 +69,42 @@ public class NarridoReport {
         JasperExportManager.exportReportToPdfStream(jp, new FileOutputStream(file));
     }
     
-    public static void generateReMr() throws JRException, FileNotFoundException {
+    public static void generateReMr(
+            String reMr,
+            Date date,
+            String description,
+            String note,
+            String receivedFrom,
+            String receivedFromPosition,
+            String receiverPosition,
+            File file) throws JRException, FileNotFoundException {
         
+        PcDao dao = PcDaoHb.getInstance();
+        Map<String, Object> params = new HashMap<>();
+        Integer qty = 0;
+        Double totalAmount = 0D;
+        
+        params.put("Description", description);
+        params.put("Note", note);
+        params.put("Unit", "pcs");
+        params.put("ReceivedFrom", receivedFrom);
+        params.put("ReceivedFromPosition", receivedFromPosition);
+        params.put("ReceivedBy", reMr);
+        params.put("ReceivedByPosition", receiverPosition);
+        
+        List<NarridoPc> pcs = dao.getMrPc(reMr, date);
+        
+        qty = pcs.size();
+        
+        for(NarridoPc pc : pcs) {
+            totalAmount += pc.getUnitValue();
+        }
+        
+        params.put("Qty", qty.toString());
+        params.put("TotalAmount", totalAmount);
+        
+        JasperPrint jp = JasperFillManager.fillReport(REPORT_DIR + "DarthMall.jasper", params, new JREmptyDataSource());
+        JasperExportManager.exportReportToPdfStream(jp, new FileOutputStream(file));
     }
     
     public static void main(String[] args) throws JRException, FileNotFoundException{

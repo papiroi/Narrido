@@ -637,9 +637,10 @@ public class NarridoITResource {
         }
     }
     
-    @GET
+    @POST
     @Path("/remr")
-    public Response reportReMr() {
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response reportReMr(MrData data) {
         NarridoUser user = null;
         try {
             String token = context.getHeaderString(HttpHeaders.AUTHORIZATION);
@@ -655,7 +656,7 @@ public class NarridoITResource {
             List<NarridoJob> jobs = NarridoGeneric.getList(NarridoJob.class);
             
             DateFormat df = new SimpleDateFormat("MMM d y hhmm");
-            String fileName = "Job Summary " + df.format(new Date()) + ".pdf";
+            String fileName = "Re-MR " + user.getFirstName() + " " + user.getLastName() + " " + df.format(new Date()) + ".pdf";
             String url = NarridoIO.DIR + "reports/" + fileName;
             String siteUrl = "http://localhost:8080/files/reports/" + fileName;
             
@@ -674,7 +675,16 @@ public class NarridoITResource {
             }
             
             theFile = new File(url);
-            NarridoReport.generateJobReport(jobs, theFile);
+            
+            NarridoReport.generateReMr(
+                    data.getReMr(),
+                    data.getDate(),
+                    data.getDescription(),
+                    data.getNote(),
+                    data.getReceivedFrom(), 
+                    data.getReceivedFromPosition(),
+                    data.getReceiverPosition(),
+                    theFile);
             
             NarridoFile file = new NarridoFile();
             file.setFileType("report");
@@ -861,6 +871,74 @@ class PcUpdateData {
 
     public void setRemarks(String remarks) {
         this.remarks = remarks;
+    }
+    
+    
+}
+
+class MrData { //nice guy
+    private String reMr;
+    private Date date;
+    private String description;
+    private String note;
+    private String receivedFrom;
+    private String receivedFromPosition;
+    private String receiverPosition;
+
+    public String getReMr() {
+        return reMr;
+    }
+
+    public void setReMr(String reMr) {
+        this.reMr = reMr;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
+    public String getReceivedFrom() {
+        return receivedFrom;
+    }
+
+    public void setReceivedFrom(String receivedFrom) {
+        this.receivedFrom = receivedFrom;
+    }
+
+    public String getReceivedFromPosition() {
+        return receivedFromPosition;
+    }
+
+    public void setReceivedFromPosition(String receivedFromPosition) {
+        this.receivedFromPosition = receivedFromPosition;
+    }
+
+    public String getReceiverPosition() {
+        return receiverPosition;
+    }
+
+    public void setReceiverPosition(String receiverPosition) {
+        this.receiverPosition = receiverPosition;
     }
     
     

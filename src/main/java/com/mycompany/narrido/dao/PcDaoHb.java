@@ -80,11 +80,14 @@ public class PcDaoHb implements PcDao{
             
             Root<NarridoPc> grp = cq.from(NarridoPc.class);
             cq.where(
-                    cb.equal(grp.get(NarridoPc_.reMr), mr)
+                    cb.and(
+                        cb.equal(grp.get(NarridoPc_.dateAcquired), dateAcquired),
+                        cb.equal(grp.get(NarridoPc_.reMr), mr)
+                    )
             );
             
-            ParameterExpression<Date> date = cb.parameter(Date.class);
-            TypedQuery<NarridoPc> tq = sess.createQuery(cq).setParameter(date, dateAcquired, TemporalType.DATE);
+            //ParameterExpression<Date> date = cb.parameter(Date.class);
+            TypedQuery<NarridoPc> tq = sess.createQuery(cq);
             pcs = tq.getResultList();
             tx.commit();
         } catch (HibernateException e) {

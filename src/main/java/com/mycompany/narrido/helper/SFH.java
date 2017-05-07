@@ -5,13 +5,15 @@
  */
 package com.mycompany.narrido.helper;
 
+import com.mycompany.narrido.dao.PcDaoHb;
+import com.mycompany.narrido.dao.ice.PcDao;
 import com.mycompany.narrido.helper.NarridoGeneric.NarridoOperation;
 import com.mycompany.narrido.pojo.NarridoLaboratory;
-import com.mycompany.narrido.pojo.NarridoLaboratory_;
 import com.mycompany.narrido.pojo.NarridoPc;
 import com.mycompany.narrido.pojo.NarridoUser;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;

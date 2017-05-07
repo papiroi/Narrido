@@ -195,7 +195,7 @@ CREATE TABLE `file` (
   CONSTRAINT `fk_file_posts1` FOREIGN KEY (`postid`) REFERENCES `posts` (`postid`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_file_user_group1` FOREIGN KEY (`group_id`) REFERENCES `user_group` (`group_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_file_users1` FOREIGN KEY (`userid`) REFERENCES `users` (`userid`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -204,7 +204,7 @@ CREATE TABLE `file` (
 
 LOCK TABLES `file` WRITE;
 /*!40000 ALTER TABLE `file` DISABLE KEYS */;
-INSERT INTO `file` VALUES (1,'http://localhost:8080/files/qr/PC-01 Computer Laboratory 1.png','PC-01 Computer Laboratory 1.png',5,NULL,NULL,'2017-05-07 06:25:19','qr'),(2,'http://localhost:8080/files/qr/PC-02 Computer Laboratory 1.png','PC-02 Computer Laboratory 1.png',5,NULL,NULL,'2017-05-07 06:26:09','qr'),(3,'http://localhost:8080/files/qr/PC-03 Computer Laboratory 1.png','PC-03 Computer Laboratory 1.png',5,NULL,NULL,'2017-05-07 06:27:25','qr'),(4,'http://localhost:8080/files/qr/PC-04 Computer Laboratory 1.png','PC-04 Computer Laboratory 1.png',5,NULL,NULL,'2017-05-07 06:29:43','qr'),(5,'http://localhost:8080/files/qr/PC-05 Computer Laboratory 1.png','PC-05 Computer Laboratory 1.png',5,NULL,NULL,'2017-05-07 06:30:28','qr'),(6,'http://localhost:8080/files/reports/PC Report Computer Laboratory 1 May 7 2017 0630.pdf','PC Report Computer Laboratory 1 May 7 2017 0630.pdf',5,NULL,NULL,'2017-05-07 06:30:53','report'),(7,'http://localhost:8080/files/reports/Monitoring Report Computer Laboratory 1 May 7 2017 0644.pdf','Monitoring Report Computer Laboratory 1 May 7 2017 0644.pdf',2,NULL,NULL,'2017-05-07 06:44:14','report'),(8,'http://localhost:8080/files/reports/Job Summary May 7 2017 0652.pdf','Job Summary May 7 2017 0652.pdf',3,NULL,NULL,'2017-05-07 06:52:45','report'),(9,'http://localhost:8080/files/reports/Job Summary May 7 2017 0655.pdf','Job Summary May 7 2017 0655.pdf',4,NULL,NULL,'2017-05-07 06:55:37','report');
+INSERT INTO `file` VALUES (1,'http://localhost:8080/files/qr/PC-01 Computer Laboratory 1.png','PC-01 Computer Laboratory 1.png',5,NULL,NULL,'2017-05-07 06:25:19','qr'),(2,'http://localhost:8080/files/qr/PC-02 Computer Laboratory 1.png','PC-02 Computer Laboratory 1.png',5,NULL,NULL,'2017-05-07 06:26:09','qr'),(3,'http://localhost:8080/files/qr/PC-03 Computer Laboratory 1.png','PC-03 Computer Laboratory 1.png',5,NULL,NULL,'2017-05-07 06:27:25','qr'),(4,'http://localhost:8080/files/qr/PC-04 Computer Laboratory 1.png','PC-04 Computer Laboratory 1.png',5,NULL,NULL,'2017-05-07 06:29:43','qr'),(5,'http://localhost:8080/files/qr/PC-05 Computer Laboratory 1.png','PC-05 Computer Laboratory 1.png',5,NULL,NULL,'2017-05-07 06:30:28','qr'),(6,'http://localhost:8080/files/reports/PC Report Computer Laboratory 1 May 7 2017 0630.pdf','PC Report Computer Laboratory 1 May 7 2017 0630.pdf',5,NULL,NULL,'2017-05-07 06:30:53','report'),(7,'http://localhost:8080/files/reports/Monitoring Report Computer Laboratory 1 May 7 2017 0644.pdf','Monitoring Report Computer Laboratory 1 May 7 2017 0644.pdf',2,NULL,NULL,'2017-05-07 06:44:14','report'),(8,'http://localhost:8080/files/reports/Job Summary May 7 2017 0652.pdf','Job Summary May 7 2017 0652.pdf',3,NULL,NULL,'2017-05-07 06:52:45','report'),(9,'http://localhost:8080/files/reports/Job Summary May 7 2017 0655.pdf','Job Summary May 7 2017 0655.pdf',4,NULL,NULL,'2017-05-07 06:55:37','report'),(10,'http://localhost:8080/files/reports/Re-MR Nelia Ocampo May 7 2017 0823.pdf','Re-MR Nelia Ocampo May 7 2017 0823.pdf',5,NULL,NULL,'2017-05-07 08:23:27','report');
 /*!40000 ALTER TABLE `file` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -632,4 +632,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-05-07  6:57:09
+-- Dump completed on 2017-05-07  8:24:18

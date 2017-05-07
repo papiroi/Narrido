@@ -340,7 +340,7 @@ function showPcs() {
     }
     
     if(userObj.type === "property-supply") {
-        var buttonDiv = $("<div/>", {class: "col-xs-3 offset-xs-2"}).appendTo(row);
+        var buttonDiv = $("<div/>", {class: "col-xs-3 offset-xs-1"}).appendTo(row);
         var button = $("<button/>", {
             type: "button",
             class: "form-control btn btn-primary"
@@ -349,7 +349,7 @@ function showPcs() {
                 .appendTo(buttonDiv);
     }
     
-    var buttonDiv2 = $("<div/>", {class: "col-xs-3"}).appendTo(row);
+    var buttonDiv2 = $("<div/>", {class: "col-xs-2"}).appendTo(row);
     var button2 = $("<button/>", {
         type: "button",
         class: "form-control btn btn-primary"
@@ -367,6 +367,18 @@ function showPcs() {
                 });
             })
             .appendTo(buttonDiv2);
+    
+    if(userObj.type === "property-supply") {
+        var buttonDiv3 = $("<div/>", {class: "col-xs-2"}).appendTo(row);
+        var button3 = $("<button/>", {
+            type: "button",
+            class: "form-control btn btn-primary"
+        }).html("Print Re-MR")
+                .on("click", function() {
+                    showModal(reMrBody(), "Print Re-MR");
+                })
+                .appendTo(buttonDiv3);
+    }
     
     $("<div/>", {class: "container", id: "pc-content"}).appendTo(pcPane);
     viewPcs();
@@ -1365,4 +1377,148 @@ function showIssues(pc) {
             issuesPane.append(tablifySupport(tickets));
         }
     });
+}
+
+function reMrBody() {
+    var frag = document.createDocumentFragment();
+    
+    var container = $("<div/>", {class: "container"}).appendTo(frag);
+    var form = $("<form/>").on("submit", function(event) {
+        event.preventDefault();
+        
+        $("#remr-submit").prop("disabled", true).text("Submitting...");
+        var remrData = {
+            reMr : $("#remr-remr").val(),
+            date : $("#remr-date").val(),
+            description : $("#remr-description").val(),
+            note : $("#remr-note").val(),
+            receivedFrom : $("#remr-received-from").val(),
+            receivedFromPosition : $("#remr-received-from-position").val(), 
+            receiverPosition : $("#remr-receiver-position").val()
+        };
+
+        $.ajax({
+            type: "POST",
+            url: "/Narrido-1.0-SNAPSHOT/api/it/remr",
+            data: JSON.stringify(remrData),
+            contentType: "application/json",
+            success: function() {
+                showModal($("<p/>").text("Report Generated!"), "Re-MR");
+            },
+            error: function(xhr) {
+                showModal($("<p/>").text("Error Generating Report: " + xhr.responseText), "Re-MR");
+            }
+        });
+    }).appendTo(container);
+    
+
+    var remrRow = $("<div/>", {class: "form-group row"})
+            .appendTo(form);
+    
+    var remrDiv = $("<div/>", {class: "col-xs-12"})
+            .appendTo(remrRow);
+    
+    $("<input/>", {
+        type: "text",
+        required: "true",
+        id: "remr-remr",
+        placeholder: "Name of Re-MR'd",
+        class: "form-control"
+    }).appendTo(remrDiv);
+    
+    var dateRow = $("<div/>", {class: "form-group row"})
+            .appendTo(form);
+    
+    var dateDiv = $("<div/>", {class: "col-xs-12"})
+            .appendTo(dateRow);
+    
+    $("<input/>", {
+        type: "date",
+        id: "remr-date",
+        required: "true",
+        class: "form-control"
+    }).appendTo(dateDiv);
+    
+    var descriptionRow = $("<div/>", {class: "form-group row"})
+            .appendTo(form);
+    
+    var descriptionDiv = $("<div/>", {class: "col-xs-12"})
+            .appendTo(descriptionRow);
+    
+    $("<textarea/>", {
+        id: "remr-description",
+        required: "true",
+        placeholder: "Description (eg. pc specs)",
+        class: "form-control"
+    }).appendTo(descriptionDiv);
+    
+    var noteRow = $("<div/>", {class: "form-group row"})
+            .appendTo(form);
+    
+    var noteDiv = $("<div/>", {class: "col-xs-12"})
+            .appendTo(noteRow);
+    
+    $("<textarea/>", {
+        id: "remr-note",
+        required: "true",
+        placeholder: "Note (eg. Transferred from Juan Dela Cruz to John Doe)",
+        class: "form-control"
+    }).appendTo(noteDiv);
+    
+    var receivedFromRow = $("<div/>", {class: "form-group row"})
+            .appendTo(form);
+    
+    var receivedFromDiv = $("<div/>", {class: "col-xs-12"})
+            .appendTo(receivedFromRow);
+    
+    $("<input/>", {
+        type: "text",
+        id: "remr-received-from",
+        required: "true",
+        placeholder: "Received From",
+        class: "form-control"
+    }).appendTo(receivedFromDiv);
+    
+    var receivedFromPositionRow = $("<div/>", {class: "form-group row"})
+            .appendTo(form);
+    
+    var receivedFromPositionDiv = $("<div/>", {class: "col-xs-12"})
+            .appendTo(receivedFromPositionRow);
+    
+    $("<input/>", {
+        type: "text",
+        id: "remr-received-from-position",
+        required: "true",
+        placeholder: "Received From Position",
+        class: "form-control"
+    }).appendTo(receivedFromPositionDiv);
+    
+    var receiverPositionRow = $("<div/>", {class: "form-group row"})
+            .appendTo(form);
+    
+    var receiverPositionDiv = $("<div/>", {class: "col-xs-12"})
+            .appendTo(receiverPositionRow);
+    
+    $("<input/>", {
+        type: "text",
+        id: "remr-receiver-position",
+        required: "true",
+        placeholder: "Receiver Position",
+        class: "form-control"
+    }).appendTo(receiverPositionDiv);
+    
+    var buttonRow = $("<div/>", {class: "form-group row"})
+            .appendTo(form);
+    
+    var buttonDiv = $("<div/>", {class: "col-xs-12"})
+            .appendTo(buttonRow);
+    
+    $("<button/>", {
+        type: "submit",
+        id: "remr-submit",
+        value: "Submit",
+        class: "btn btn-primary"
+    }).text("Create Re-MR").appendTo(buttonDiv);
+    
+    return frag;
 }
