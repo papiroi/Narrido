@@ -518,7 +518,7 @@ public class NarridoITResource {
             boolean isFaculty = NarridoType.FACULTY.equals(user.getType());
             
             if("all".equals(status)) {
-                jobs = !isFaculty ?
+                jobs = isFaculty ?
                             NarridoGeneric.getList(NarridoJob.class, NarridoJob_.reportedBy, user) :
                             NarridoGeneric.getList(NarridoJob.class);
             } else {
@@ -656,7 +656,7 @@ public class NarridoITResource {
             List<NarridoJob> jobs = NarridoGeneric.getList(NarridoJob.class);
             
             DateFormat df = new SimpleDateFormat("MMM d y hhmm");
-            String fileName = "Re-MR " + user.getFirstName() + " " + user.getLastName() + " " + df.format(new Date()) + ".pdf";
+            String fileName = "Re-MR " + data.getReMr() + " " + df.format(new Date()) + ".pdf";
             String url = NarridoIO.DIR + "reports/" + fileName;
             String siteUrl = "http://localhost:8080/files/reports/" + fileName;
             

@@ -15,6 +15,7 @@
  */
 package com.mycompany.narrido;
 
+import com.mycompany.narrido.helper.Aaccup;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -32,17 +33,16 @@ public class NarridoAaccupResource {
     public Response aaccupData() {
         final AaccupData data = new AaccupData();
         
-        data.setMeanWorkingPcsPerLab(19.91D);
+        data.setMeanWorkingPcsPerLab(Aaccup.averageWorkingPerLab());
         
         data.setMeanStudentAccessHours(19.23D);
         data.setMeanPcDowntime(2.45D);
         
-        data.setNumPcsWithIssues(20);
-        data.setNumPcsWithoutIssues(50);
+        data.setPercentWorking(Aaccup.percentPcWorking());
         data.setMeanWaitingTime(20.44D);
         
-        data.setYoungPcs(60);
-        data.setOldPcs(10);
+        data.setYoungPcs(0);
+        data.setOldPcs(0);
         
         data.setMeanVisitsPerDay(2.5D);
         
@@ -59,8 +59,7 @@ class AaccupData {
     private Double meanPcDowntime;
     
     //B I1
-    private Integer numPcsWithoutIssues;
-    private Integer numPcsWithIssues;
+    private Double percentWorking;
     private Double meanWaitingTime;
     
     //B I3
@@ -97,22 +96,14 @@ class AaccupData {
         this.meanPcDowntime = meanPcDowntime;
     }
 
-    public Integer getNumPcsWithoutIssues() {
-        return numPcsWithoutIssues;
+    public Double getPercentWorking() {
+        return percentWorking;
     }
 
-    public void setNumPcsWithoutIssues(Integer numPcsWithoutIssues) {
-        this.numPcsWithoutIssues = numPcsWithoutIssues;
+    public void setPercentWorking(Double percentWorking) {
+        this.percentWorking = percentWorking;
     }
-
-    public Integer getNumPcsWithIssues() {
-        return numPcsWithIssues;
-    }
-
-    public void setNumPcsWithIssues(Integer numPcsWithIssues) {
-        this.numPcsWithIssues = numPcsWithIssues;
-    }
-
+    
     public Double getMeanWaitingTime() {
         return meanWaitingTime;
     }
