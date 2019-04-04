@@ -5,9 +5,10 @@
  */
 package com.mycompany.narrido;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.hibernate5.Hibernate5Module;
+import com.mycompany.narrido.helper.NarridoGeneric;
 import com.mycompany.narrido.helper.SFH;
+import com.mycompany.narrido.pojo.NarridoUser;
+import java.util.List;
 import java.util.Set;
 import org.glassfish.jersey.jackson.JacksonFeature;
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
@@ -28,6 +29,15 @@ public class Narrido extends ResourceConfig{
 //        addRestResourceClasses(resources);
 //        return resources;
 //    }
+    
+    public static void main(String[] args) {
+        new Narrido();
+        List<NarridoUser> users = NarridoGeneric.getList(NarridoUser.class);
+        
+        for(NarridoUser user : users) {
+            System.out.println(user.getFirstName() + " " + user.getLastName());
+        }
+    }
 
     public Narrido() {
         super();

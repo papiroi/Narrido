@@ -1,0 +1,2 @@
+call mvn install:install-file -Dfile="MyFontFamily.jar" -DgroupId="com.narrido" -DartifactId="myfontfamily" -Dversion="beta" -Dpackaging="jar"
+call mvn install:install-file -Dfile="Times.jar" -DgroupId="com.narrido" -DartifactId="times" -Dversion="beta" -Dpackaging="jar"
